@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPL Program — 72 kg · 173 cm</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", sans-serif;
+      --text1: #111827;
+      --text2: #6b7280;
+      --bg:    #f9fafb;
+      --card:  #ffffff;
+      --muted: #f3f4f6;
+      --bdr:   #e5e7eb;
+      --bdr2:  #d1d5db;
+      --r-md:  8px;
+      --r-lg:  12px;
+      --r-xl:  16px;
+      --blue:  #185FA5;  --blue-bg:  #E6F1FB;
+      --green: #3B6D11;  --green-bg: #EAF3DE;
+      --org:   #993C1D;  --org-bg:   #FAECE7;
+      --pur:   #534AB7;  --pur-bg:   #EEEDFE;
+      --pur-d: #3C3489;
+      --teal:  #0F6E56;  --teal-bg:  #E1F5EE;
+    }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      color: var(--text1);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* ── App shell ── */
+    .app { max-width: 720px; margin: 0 auto; padding: 20px 16px 56px; }
+
+    .app-header { margin-bottom: 18px; }
+    .app-title  { font-size: 22px; font-weight: 700; margin: 0 0 4px; }
+    .app-sub    { font-size: 13px; color: var(--text2); margin: 0; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex; gap: 2px;
+      background: var(--muted); border-radius: var(--r-lg);
+      padding: 3px; margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1; border: none; background: none;
+      padding: 10px 6px; border-radius: var(--r-md);
+      font-family: var(--font); font-size: 13px; font-weight: 500;
+      cursor: pointer; color: var(--text2);
+      transition: all 0.15s;
+    }
+    .tab-btn.active {
+      background: var(--card); color: var(--text1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ── Generic cards / sections ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--bdr);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .card-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--bdr);
+    }
+    .card-title { font-size: 14px; font-weight: 700; margin: 0; }
+    .s-title { font-size: 16px; font-weight: 700; margin: 4px 0 14px; }
+
+    /* ── Stat row ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 8px; margin-bottom: 16px;
+    }
+    .stat-card {
+      background: var(--muted); border-radius: var(--r-md);
+      padding: 10px 12px;
+    }
+    .stat-label { font-size: 11px; color: var(--text2); margin-bottom: 4px; }
+    .stat-val   { font-size: 20px; font-weight: 700; }
+    .stat-val small { font-size: 12px; font-weight: 400; }
+
+    /* ── Day grid ── */
+    .day-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 10px; margin-bottom: 14px;
+    }
+    .day-card {
+      background: var(--card); border: 1px solid var(--bdr);
+      border-radius: var(--r-lg); padding: 12px;
+      cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .day-card:hover  { border-color: var(--bdr2); }
+    .day-card.active { border: 2px solid var(--pur); box-shadow: 0 0 0 3px rgba(83,74,183,0.1); }
+    .day-tag {
+      font-size: 11px; font-weight: 700;
+      padding: 3px 9px; border-radius: 6px;
+      display: inline-block; margin-bottom: 6px;
+    }
+    .push  { background: var(--blue-bg);  color: var(--blue);  }
+    .pull  { background: var(--green-bg); color: var(--green); }
+    .legs  { background: var(--org-bg);   color: var(--org);   }
+    .day-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+    .day-sub  { font-size: 11px; color: var(--text2); }
+    .chips    { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .chip     { font-size: 10px; padding: 2px 7px; border-radius: 99px; background: var(--muted); color: var(--text2); }
+
+    /* ── Workout detail ── */
+    .detail-box {
+      background: var(--card); border: 1px solid var(--bdr);
+      border-radius: var(--r-xl); padding: 16px;
+    }
+    .detail-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+    .ex-row {
+      display: grid; grid-template-columns: 26px 1fr auto;
+      align-items: start; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid var(--bdr);
+    }
+    .ex-row:last-child { border-bottom: none; }
+    .ex-num  { font-size: 11px; font-weight: 700; color: var(--text2); padding-top: 2px; }
+    .ex-name { font-size: 14px; font-weight: 700; }
+    .ex-tip  { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.55; }
+    .ex-sets {
+      background: var(--muted); border-radius: 6px;
+      font-size: 12px; font-weight: 700;
+      padding: 4px 9px; white-space: nowrap;
+    }
+    .tip-box {
+      background: var(--teal-bg); border-radius: var(--r-md);
+      padding: 12px 14px; margin-top: 14px;
+    }
+    .tip-label { font-size: 12px; font-weight: 700; color: var(--teal); margin-bottom: 4px; }
+    .tip-text  { font-size: 13px; color: var(--teal); line-height: 1.65; }
+    .ex-badge  { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+    .rest-note { font-size: 11px; color: var(--text2); padding: 0 0 10px; border-bottom: 1px solid var(--bdr); margin-bottom: 4px; }
+
+    /* ── Nutrition ── */
+    .kcal-banner {
+      background: var(--pur-bg); border-radius: var(--r-xl);
+      padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .kcal-lbl { font-size: 13px; color: var(--pur-d); font-weight: 600; }
+    .kcal-sub { font-size: 11px; color: var(--pur-d); margin-top: 2px; }
+    .kcal-val { font-size: 28px; font-weight: 900; color: var(--pur); line-height: 1; }
+    .kcal-unit { font-size: 12px; color: var(--pur-d); text-align: right; margin-top: 2px; }
+
+    .macro-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 8px; margin-bottom: 14px;
+    }
+    .macro-card { border-radius: var(--r-lg); padding: 14px 12px; text-align: center; }
+    .macro-card.mp { background: var(--blue-bg); }
+    .macro-card.mc { background: var(--green-bg); }
+    .macro-card.mf { background: var(--org-bg); }
+    .macro-val  { font-size: 24px; font-weight: 900; line-height: 1; }
+    .macro-unit { font-size: 13px; font-weight: 500; }
+    .macro-lbl  { font-size: 11px; font-weight: 600; margin-top: 5px; }
+    .macro-card.mp .macro-val { color: var(--blue);  }
+    .macro-card.mc .macro-val { color: var(--green); }
+    .macro-card.mf .macro-val { color: var(--org);   }
+    .macro-card.mp .macro-lbl { color: var(--blue);  }
+    .macro-card.mc .macro-lbl { color: var(--green); }
+    .macro-card.mf .macro-lbl { color: var(--org);   }
+
+    /* Note / warn boxes */
+    .note-box {
+      border-left: 3px solid #F59E0B; background: #FFFBEB;
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+      padding: 12px 14px; margin-bottom: 14px;
+    }
+    .note-box p { font-size: 13px; color: #92400E; line-height: 1.65; margin: 0; }
+    .note-box p + p { margin-top: 6px; }
+
+    .warn-box {
+      border-left: 3px solid #EF4444; background: #FEF2F2;
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+      padding: 12px 14px; margin-bottom: 14px;
+    }
+    .warn-box p { font-size: 13px; color: #7F1D1D; line-height: 1.65; margin: 0; }
+
+    /* Food table */
+    .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.food-tbl { width: 100%; border-collapse: collapse; min-width: 380px; }
+    table.food-tbl th {
+      font-size: 11px; font-weight: 700; color: var(--text2);
+      text-align: right; padding: 9px 14px;
+      background: var(--muted); border-bottom: 1px solid var(--bdr);
+    }
+    table.food-tbl th:first-child { text-align: left; }
+    table.food-tbl td {
+      font-size: 13px; padding: 11px 14px;
+      border-bottom: 1px solid var(--bdr); text-align: right;
+      vertical-align: middle;
+    }
+    table.food-tbl td:first-child { text-align: left; }
+    table.food-tbl tr:last-child td { border-bottom: none; }
+    .food-name { font-size: 13px; font-weight: 700; }
+    .food-en   { font-size: 11px; color: var(--text2); }
+    .pill-p { background: var(--blue-bg); color: var(--blue); font-weight: 700; padding: 3px 9px; border-radius: 99px; font-size: 12px; white-space: nowrap; }
+
+    /* Meal plan */
+    .meal-list { display: grid; gap: 10px; margin-bottom: 14px; }
+    .meal-card {
+      background: var(--card); border: 1px solid var(--bdr);
+      border-radius: var(--r-lg); padding: 14px;
+    }
+    .meal-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+    .meal-badge { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 6px; white-space: nowrap; }
+    .meal-ttl  { font-size: 14px; font-weight: 700; flex: 1; }
+    .meal-kcal { font-size: 12px; color: var(--text2); margin-left: auto; }
+    .meal-items { list-style: none; padding: 0; margin: 0 0 8px; }
+    .meal-items li { font-size: 13px; color: var(--text2); padding: 2px 0; line-height: 1.5; }
+    .meal-items li::before { content: "· "; color: var(--bdr2); }
+    .meal-macros { display: flex; gap: 14px; flex-wrap: wrap; }
+    .mm { font-size: 11px; color: var(--text2); }
+    .mm b { color: var(--text1); }
+
+    .day-total {
+      background: var(--pur-bg); border-radius: var(--r-xl);
+      padding: 14px 16px; margin-bottom: 14px;
+    }
+    .day-total-title { font-size: 13px; font-weight: 700; color: var(--pur-d); margin-bottom: 10px; }
+    .day-total-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; text-align: center; }
+    .dt-val { font-size: 20px; font-weight: 900; }
+    .dt-lbl { font-size: 10px; font-weight: 600; margin-top: 2px; }
+    .dt-note { font-size: 12px; color: var(--pur-d); margin-top: 10px; line-height: 1.6; }
+
+    /* ── Progressive Overload ── */
+    .po-intro {
+      background: var(--pur-bg); border-radius: var(--r-xl);
+      padding: 16px 18px; margin-bottom: 16px;
+    }
+    .po-intro p { font-size: 14px; color: var(--pur-d); line-height: 1.75; margin: 0; }
+
+    .method-list { display: grid; gap: 10px; margin-bottom: 16px; }
+    .method-card {
+      background: var(--card); border: 1px solid var(--bdr);
+      border-radius: var(--r-lg); padding: 14px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .method-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border-radius: 10px; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .method-body { flex: 1; min-width: 0; }
+    .method-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .method-desc  { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 6px; }
+    .method-ex { font-size: 12px; padding: 7px 11px; border-radius: 7px; line-height: 1.55; }
+
+    table.prog-tbl { width: 100%; border-collapse: collapse; min-width: 360px; }
+    table.prog-tbl th {
+      font-size: 11px; font-weight: 700; color: var(--text2);
+      text-align: center; padding: 9px 10px;
+      background: var(--muted); border-bottom: 1px solid var(--bdr);
+    }
+    table.prog-tbl th:first-child { text-align: left; }
+    table.prog-tbl td {
+      font-size: 13px; padding: 10px;
+      border-bottom: 1px solid var(--bdr); text-align: center;
+    }
+    table.prog-tbl td:first-child { text-align: left; font-weight: 700; }
+    table.prog-tbl tr:last-child td { border-bottom: none; }
+    .badge-up { background: var(--green-bg); color: var(--green); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 560px) {
+      .app { padding: 14px 12px 56px; }
+
+      .tab-btn { font-size: 12px; padding: 9px 4px; }
+
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .stat-val  { font-size: 18px; }
+
+      /* Day cards → stacked horizontal layout */
+      .day-grid { grid-template-columns: 1fr; gap: 8px; }
+      .day-card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: start;
+        column-gap: 12px;
+        padding: 12px 14px;
+      }
+      .day-tag  { grid-column: 1; grid-row: 1; margin-bottom: 0; }
+      .day-name { grid-column: 2; grid-row: 1; }
+      .day-sub  { grid-column: 2; grid-row: 2; }
+      .chips    { grid-column: 2; grid-row: 3; }
+
+      .macro-val { font-size: 20px; }
+
+      .kcal-val { font-size: 24px; }
+    }
+
+    @media (max-width: 380px) {
+      .meal-head { gap: 6px; }
+      .meal-badge { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <div class="app-header">
+    <p class="app-title">โปรแกรม PPL</p>
+    <p class="app-sub">Body Recomp · 72 kg · 173 cm · หุ่นนักกีฬา</p>
+  </div>
+
+  <!-- ── Tabs ── -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('workout')">ออกกำลังกาย</button>
+    <button class="tab-btn" onclick="switchTab('nutrition')">โภชนาการ</button>
+    <button class="tab-btn" onclick="switchTab('overload')">Progressive OL</button>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       TAB 1 : WORKOUT
+  ═══════════════════════════════════ -->
+  <div class="tab-pane active" id="tab-workout">
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">รูปแบบ</div>
+        <div class="stat-val" style="font-size:15px;padding-top:3px;">PPL Split</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">เวลา/วัน</div>
+        <div class="stat-val">60<small> นาที</small></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">พัก/เซ็ต</div>
+        <div class="stat-val" style="font-size:13px;padding-top:3px;">2–3 น.<br><span style="font-size:10px;font-weight:400;color:var(--text2);">60–90 วิ isolation</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">เป้าหมาย</div>
+        <div class="stat-val" style="font-size:15px;padding-top:3px;">Recomp</div>
+      </div>
+    </div>
+
+    <div class="day-grid" id="dayGrid">
+      <div class="day-card active" onclick="selectDay(0)">
+        <span class="day-tag push">จันทร์</span>
+        <div class="day-name">Push</div>
+        <div class="day-sub">อก · ไหล่ · แขนหลัง</div>
+        <div class="chips">
+          <span class="chip">Chest</span>
+          <span class="chip">Shoulders</span>
+          <span class="chip">Triceps</span>
+        </div>
+      </div>
+      <div class="day-card" onclick="selectDay(1)">
+        <span class="day-tag pull">พุธ</span>
+        <div class="day-name">Pull</div>
+        <div class="day-sub">หลัง · สะบัก · แขนหน้า</div>
+        <div class="chips">
+          <span class="chip">Back</span>
+          <span class="chip">Rear Delt</span>
+          <span class="chip">Biceps</span>
+        </div>
+      </div>
+      <div class="day-card" onclick="selectDay(2)">
+        <span class="day-tag legs">ศุกร์</span>
+        <div class="day-name">Legs</div>
+        <div class="day-sub">ขา · สะโพก · น่อง · Core</div>
+        <div class="chips">
+          <span class="chip">Quads</span>
+          <span class="chip">Hamstrings</span>
+          <span class="chip">Glutes</span>
+          <span class="chip">Calves</span>
+          <span class="chip">Core</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-box" id="detailBox"></div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════
+       TAB 2 : NUTRITION
+  ═══════════════════════════════════ -->
+  <div class="tab-pane" id="tab-nutrition">
+
+    <!-- Calorie target -->
+    <div class="kcal-banner">
+      <div>
+        <div class="kcal-lbl">เป้าหมายแคลอรี่/วัน</div>
+        <div class="kcal-sub">สำหรับ Body Recomp + หุ่นนักกีฬา</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="kcal-val">2,400</div>
+        <div class="kcal-unit">kcal / วัน</div>
+      </div>
+    </div>
+
+    <!-- Macros -->
+    <div class="macro-row">
+      <div class="macro-card mp">
+        <div class="macro-val">145<span class="macro-unit">g</span></div>
+        <div class="macro-lbl">โปรตีน</div>
+      </div>
+      <div class="macro-card mc">
+        <div class="macro-val">240<span class="macro-unit">g</span></div>
+        <div class="macro-lbl">คาร์บ</div>
+      </div>
+      <div class="macro-card mf">
+        <div class="macro-val">70<span class="macro-unit">g</span></div>
+        <div class="macro-lbl">ไขมัน</div>
+      </div>
+    </div>
+
+    <!-- Carb warning -->
+    <div class="note-box">
+      <p><b>⚠️ ขาดคาร์บ:</b> อาหารที่เลือก (ผัก นม หมู วัว ไก่ โยเกิร์ต) ให้โปรตีนและไขมันสูง แต่คาร์บน้อยมาก — ทำให้ได้ประมาณ 1,500 kcal เท่านั้น</p>
+      <p>เพื่อหุ่นนักกีฬา ควรเพิ่ม <b>ข้าวสวย</b> หรือ <b>มันเทศ</b> ทุกมื้อ เพื่อให้ได้พลังงานเพียงพอและกล้ามเนื้อไม่สลาย</p>
+    </div>
+
+    <!-- Food table -->
+    <div class="card">
+      <div class="card-header">
+        <p class="card-title">โปรตีนต่อมื้อจากอาหารของคุณ (ต่อ 100 g)</p>
+      </div>
+      <div class="tbl-wrap">
+        <table class="food-tbl">
+          <thead>
+            <tr>
+              <th>อาหาร</th>
+              <th>โปรตีน</th>
+              <th>kcal</th>
+              <th>ไขมัน</th>
+              <th>เวลาที่ดี</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="food-name">ไก่อก</div>
+                <div class="food-en">Chicken Breast</div>
+              </td>
+              <td><span class="pill-p">31 g</span></td>
+              <td>165</td>
+              <td>3.6 g</td>
+              <td>กลางวัน / เย็น</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="food-name">เนื้อวัว (สันนอก)</div>
+                <div class="food-en">Beef Sirloin</div>
+              </td>
+              <td><span class="pill-p">26 g</span></td>
+              <td>220</td>
+              <td>12 g</td>
+              <td>เย็น / หลังออกกำลัง</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="food-name">หมูสันใน</div>
+                <div class="food-en">Pork Loin</div>
+              </td>
+              <td><span class="pill-p">27 g</span></td>
+              <td>143</td>
+              <td>4 g</td>
+              <td>กลางวัน / เย็น</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="food-name">นม (250 ml)</div>
+                <div class="food-en">Whole Milk</div>
+              </td>
+              <td><span class="pill-p">8 g</span></td>
+              <td>152</td>
+              <td>8 g</td>
+              <td>เช้า / ก่อนนอน</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="food-name">โยเกิร์ตกรีก</div>
+                <div class="food-en">Greek Yogurt</div>
+              </td>
+              <td><span class="pill-p">10 g</span></td>
+              <td>59</td>
+              <td>0.4 g</td>
+              <td>เช้า / ของว่าง</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="food-name">ผักรวม</div>
+                <div class="food-en">Mixed Vegetables</div>
+              </td>
+              <td><span class="pill-p">2 g</span></td>
+              <td>25</td>
+              <td>0.2 g</td>
+              <td>ทุกมื้อ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Meal plan -->
+    <p class="s-title">ตัวอย่างมื้ออาหาร 1 วัน</p>
+
+    <div class="meal-list">
+
+      <div class="meal-card">
+        <div class="meal-head">
+          <span class="meal-badge" style="background:var(--pur-bg);color:var(--pur);">07:00</span>
+          <span class="meal-ttl">อาหารเช้า</span>
+          <span class="meal-kcal">~295 kcal</span>
+        </div>
+        <ul class="meal-items">
+          <li>โยเกิร์ตกรีก 200 g</li>
+          <li>นม 1 แก้ว (250 ml)</li>
+          <li>ผักต้ม / ผักสด 100 g</li>
+          <li style="color:#92400E;font-weight:600;">+ ข้าวสวย 1 ทัพพี (~100 g) → +130 kcal ✓ แนะนำ</li>
+        </ul>
+        <div class="meal-macros">
+          <div class="mm">โปรตีน <b>30 g</b></div>
+          <div class="mm">kcal <b>~295</b> (หรือ <b>~425</b> ถ้าใส่ข้าว)</div>
+        </div>
+      </div>
+
+      <div class="meal-card">
+        <div class="meal-head">
+          <span class="meal-badge" style="background:var(--blue-bg);color:var(--blue);">12:00</span>
+          <span class="meal-ttl">อาหารกลางวัน</span>
+          <span class="meal-kcal">~490 kcal</span>
+        </div>
+        <ul class="meal-items">
+          <li>ไก่อก 200 g (ต้ม / ย่าง)</li>
+          <li>ผักรวม 200 g</li>
+          <li style="color:#92400E;font-weight:600;">+ ข้าวสวย 1.5 ทัพพี (~150 g) → +195 kcal ✓ แนะนำ</li>
+        </ul>
+        <div class="meal-macros">
+          <div class="mm">โปรตีน <b>66 g</b></div>
+          <div class="mm">kcal <b>~490</b> (หรือ <b>~685</b> ถ้าใส่ข้าว)</div>
+        </div>
+      </div>
+
+      <div class="meal-card">
+        <div class="meal-head">
+          <span class="meal-badge" style="background:var(--teal-bg);color:var(--teal);">15:30</span>
+          <span class="meal-ttl">Pre-Workout Snack</span>
+          <span class="meal-kcal">~152 kcal</span>
+        </div>
+        <ul class="meal-items">
+          <li>นม 1 แก้ว (250 ml)</li>
+          <li>กินก่อนออกกำลังกาย 60–90 นาที</li>
+        </ul>
+        <div class="meal-macros">
+          <div class="mm">โปรตีน <b>8 g</b></div>
+          <div class="mm">คาร์บ <b>12 g</b></div>
+        </div>
+      </div>
+
+      <div class="meal-card">
+        <div class="meal-head">
+          <span class="meal-badge" style="background:var(--org-bg);color:var(--org);">19:00</span>
+          <span class="meal-ttl">อาหารเย็น</span>
+          <span class="meal-kcal">~510 kcal</span>
+        </div>
+        <ul class="meal-items">
+          <li>เนื้อวัว หรือ หมูสันใน 200 g (ย่าง / นึ่ง)</li>
+          <li>ผักรวม 200 g</li>
+          <li style="color:#92400E;font-weight:600;">+ มันเทศ 150 g (~130 kcal) หรือข้าว 1 ทัพพี ✓ แนะนำ</li>
+        </ul>
+        <div class="meal-macros">
+          <div class="mm">โปรตีน <b>56 g</b></div>
+          <div class="mm">kcal <b>~510</b> (หรือ <b>~640</b> ถ้าใส่คาร์บ)</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Day total -->
+    <div class="day-total">
+      <div class="day-total-title">ยอดรวมทั้งวัน (จากอาหารที่คุณกิน)</div>
+      <div class="day-total-grid">
+        <div>
+          <div class="dt-val" style="color:var(--pur);">~1,450</div>
+          <div class="dt-lbl" style="color:var(--pur-d);">kcal</div>
+        </div>
+        <div>
+          <div class="dt-val" style="color:var(--blue);">160 g</div>
+          <div class="dt-lbl" style="color:var(--blue);">โปรตีน ✓</div>
+        </div>
+        <div>
+          <div class="dt-val" style="color:var(--org);">~30 g</div>
+          <div class="dt-lbl" style="color:var(--org);">คาร์บ ⚠️</div>
+        </div>
+        <div>
+          <div class="dt-val" style="color:var(--green);">~60 g</div>
+          <div class="dt-lbl" style="color:var(--green);">ไขมัน</div>
+        </div>
+      </div>
+      <div class="dt-note">
+        โปรตีน ✓ ดีมาก — แต่ยังขาดแคลอรี่ประมาณ <b>950 kcal</b> จากเป้า 2,400 kcal<br>
+        เพิ่มข้าวสวย/มันเทศ ตามที่แนะนำในแต่ละมื้อ → จะได้ <b>~2,100–2,400 kcal</b> ✓
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════
+       TAB 3 : PROGRESSIVE OVERLOAD
+  ═══════════════════════════════════ -->
+  <div class="tab-pane" id="tab-overload">
+
+    <div class="po-intro">
+      <p>
+        <b>Progressive Overload</b> = การเพิ่ม <b>ความท้าทาย</b> ให้กล้ามเนื้อทีละน้อย อย่างต่อเนื่อง<br><br>
+        กล้ามเนื้อโตเพราะต้องปรับตัวกับสิ่งใหม่ที่ยากกว่าเดิม ถ้าออกกำลังกายด้วย <b>น้ำหนักและเซ็ตเดิมตลอด</b> กล้ามเนื้อจะหยุดพัฒนา เพราะไม่มีเหตุผลต้องเติบโต
+      </p>
+    </div>
+
+    <p class="s-title">5 วิธี Progressive Overload</p>
+
+    <div class="method-list">
+
+      <div class="method-card">
+        <div class="method-icon" style="background:var(--blue-bg);">⬆️</div>
+        <div class="method-body">
+          <div class="method-title">1. เพิ่มน้ำหนัก (Add Weight)</div>
+          <div class="method-desc">วิธีตรงที่สุด — เพิ่มน้ำหนักทันทีที่ทำครบ rep สูงสุดของ range ได้ทุกเซ็ต ด้วยฟอร์มที่ดี</div>
+          <div class="method-ex" style="background:var(--blue-bg);color:var(--blue);">
+            สัปดาห์ 1: Bench Press 50 kg × 4×8<br>
+            สัปดาห์ 2: ทำ 50 kg × 4×10 ได้หมด → สัปดาห์ 3: ขึ้นเป็น 52.5 kg × 4×8
+          </div>
+        </div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-icon" style="background:var(--green-bg);">🔢</div>
+        <div class="method-body">
+          <div class="method-title">2. เพิ่ม Reps (Double Progression)</div>
+          <div class="method-desc">เพิ่ม rep ก่อน แล้วค่อยเพิ่มน้ำหนัก — วิธีนี้ดีที่สุดสำหรับมือใหม่-กลาง ใช้กับโปรแกรมนี้ได้เลย</div>
+          <div class="method-ex" style="background:var(--green-bg);color:var(--green);">
+            Range: 8–10 reps → เริ่มที่ 8 → เพิ่มสัปดาห์ละ 1–2 rep → พอถึง 10 ทุกเซ็ต → เพิ่มน้ำหนัก 2.5–5 kg → กลับมาที่ 8 reps ใหม่
+          </div>
+        </div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-icon" style="background:var(--org-bg);">➕</div>
+        <div class="method-body">
+          <div class="method-title">3. เพิ่มเซ็ต (Add Sets)</div>
+          <div class="method-desc">เพิ่ม Total Volume ให้กล้ามเนื้อ ใช้เมื่อน้ำหนักถึงขีดจำกัดแล้วหรืออยากโฟกัสกลุ่มกล้ามเนื้อเฉพาะ</div>
+          <div class="method-ex" style="background:var(--org-bg);color:var(--org);">
+            เดือน 1: Lat Pulldown 3×10 → เดือน 2: 4×10<br>
+            (เพิ่ม 1 เซ็ต = กล้ามเนื้อทำงานเพิ่ม ~33%)
+          </div>
+        </div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-icon" style="background:var(--pur-bg);">⏱️</div>
+        <div class="method-body">
+          <div class="method-title">4. ลดเวลาพัก (Less Rest)</div>
+          <div class="method-desc">ออกกำลังกายด้วยน้ำหนักเดิมแต่พักน้อยลง = density สูงขึ้น กล้ามเนื้อทำงานหนักขึ้นต่อเวลา</div>
+          <div class="method-ex" style="background:var(--pur-bg);color:var(--pur);">
+            สัปดาห์ 1–4: พัก 90 วิ → สัปดาห์ 5–8: พัก 75 วิ → สัปดาห์ 9+: พัก 60 วิ
+          </div>
+        </div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-icon" style="background:var(--teal-bg);">🎯</div>
+        <div class="method-body">
+          <div class="method-title">5. ช้าลง Eccentric (Tempo)</div>
+          <div class="method-desc">ใช้น้ำหนักเดิมแต่ลดช้าลง (3–4 วิ) ทำให้ muscle tension สูงขึ้นมาก โดยไม่ต้องเพิ่ม weight</div>
+          <div class="method-ex" style="background:var(--teal-bg);color:var(--teal);">
+            Squat ปกติ: ลงปกติ → Squat Tempo: ลง 3 วิ · หยุด 1 วิ · ขึ้นเร็ว<br>
+            ใช้เมื่อน้ำหนักหนักเกินจนฟอร์มพัง หรืออยากเพิ่ม challenge ช่วงพัก
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Progression table -->
+    <p class="s-title">ตัวอย่าง Double Progression 4 สัปดาห์</p>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table class="prog-tbl">
+          <thead>
+            <tr>
+              <th>ท่า</th>
+              <th>สัปดาห์ 1</th>
+              <th>สัปดาห์ 2</th>
+              <th>สัปดาห์ 3</th>
+              <th>สัปดาห์ 4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bench Press</td>
+              <td>50 kg×8</td>
+              <td>50 kg×9</td>
+              <td>50 kg×10</td>
+              <td><span class="badge-up">52.5 kg×8 ↑</span></td>
+            </tr>
+            <tr>
+              <td>Squat</td>
+              <td>60 kg×8</td>
+              <td>60 kg×9</td>
+              <td>60 kg×10</td>
+              <td><span class="badge-up">62.5 kg×8 ↑</span></td>
+            </tr>
+            <tr>
+              <td>Lat Pulldown</td>
+              <td>50 kg×8</td>
+              <td>50 kg×9</td>
+              <td>50 kg×10</td>
+              <td><span class="badge-up">55 kg×8 ↑</span></td>
+            </tr>
+            <tr>
+              <td>OHP</td>
+              <td>30 kg×8</td>
+              <td>30 kg×9</td>
+              <td>30 kg×10</td>
+              <td><span class="badge-up">32.5 kg×8 ↑</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Safety warning -->
+    <div class="warn-box">
+      <p><b>กฎสำคัญ:</b> อย่าเพิ่มน้ำหนักถ้าฟอร์มยังไม่ดี — กล้ามเนื้อโตจากการทำงานถูกต้อง ไม่ใช่แค่น้ำหนักมาก บาดเจ็บทำให้หยุดฝึกเป็นสัปดาห์ = เสียมากกว่าได้</p>
+    </div>
+
+    <!-- Pro tip -->
+    <div class="tip-box">
+      <div class="tip-label">💡 ระยะเวลาที่คาดหวัง สำหรับระดับมือใหม่–กลาง</div>
+      <div class="tip-text">
+        <b>Compound lifts (Bench, Squat, Deadlift, OHP):</b> เพิ่มน้ำหนักได้ทุก <b>1–2 สัปดาห์</b><br>
+        <b>Isolation (Curl, Lateral Raise):</b> เพิ่มน้ำหนักได้ทุก <b>2–4 สัปดาห์</b><br><br>
+        ช่วงนี้คือ "Newbie Gains" — ใช้โอกาสนี้ให้เต็มที่ เพราะเมื่อระดับสูงขึ้นจะเพิ่มน้ำหนักได้ช้าลงเรื่อยๆ<br><br>
+        <b>บันทึกทุกครั้ง:</b> จด weight + reps ทุกเซ็ต — ถ้าไม่จด จะไม่รู้ว่าพัฒนาหรือแค่ทำซ้ำ
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function switchTab(name) {
+  const names = ['workout','nutrition','overload'];
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+const days = [
+  {
+    label: "Push — อก · ไหล่ · แขนหลัง",
+    color: "#185FA5",
+    exercises: [
+      { name: "Barbell Bench Press",     sets: "4×6–8",        tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้า 2 วิ แล้วดันขึ้นเร็ว" },
+      { name: "Overhead Press (DB/BB)",  sets: "3×8–10",       tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ ไม่ push forward", badge: "ย้ายขึ้น ↑", badgeBg: "#EEEDFE", badgeFg: "#534AB7" },
+      { name: "Incline Dumbbell Press",  sets: "3×10–12",      tip: "เอียง 30° เน้นอกส่วนบน ข้อศอกเปิด 45–75°" },
+      { name: "Lateral Raise",           sets: "3×15",         tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย ไม่ต้องหิ้วน้ำ" },
+      { name: "Cable Chest Fly",         sets: "2×12–15",      tip: "แขนโค้งเล็กน้อย ยืดอกให้สุดทุก rep บีบอกตรงกลาง", badge: "ลด 1 set", badgeBg: "#FFFBEB", badgeFg: "#92400E" },
+      { name: "Tricep Dips / Pushdown",  sets: "3×10–15",      tip: "Dips: ศอกชิดลำตัว ไม่แกว่ง · Pushdown: ศอกล็อค บีบแขนหลังให้สุด", badge: "ปรับ", badgeBg: "#E6F1FB", badgeFg: "#185FA5" },
+    ],
+    tipTitle: "💡 เคล็ดลับ Push Day",
+    tipText: "OHP ย้ายมาก่อน Incline เพราะต้องการไหล่ที่ยังไม่ล้า — Bench + OHP พัก 2–3 นาที · Isolation พัก 60–90 วิ"
+  },
+  {
+    label: "Pull — หลัง · สะบัก · แขนหน้า",
+    color: "#3B6D11",
+    exercises: [
+      { name: "Pull-ups / Lat Pulldown",    sets: "4×6–10",    tip: "Pull-ups: ดึงหน้าอกหาบาร์ · Lat Pulldown: ดึงลงที่คาง หน้าอกพอง ไม่แอ่นหลัง", badge: "ปรับ", badgeBg: "#E6F1FB", badgeFg: "#185FA5" },
+      { name: "Barbell Bent-over Row",      sets: "3×8–10",    tip: "หลังตรงเอียง 45° เข่างอเล็กน้อย ดึงบาร์มาที่สะดือ squeeze สะบักให้สุด", badge: "ใหม่", badgeBg: "#EAF3DE", badgeFg: "#3B6D11" },
+      { name: "Single-arm DB Row",          sets: "3×10–12",   tip: "วางมือค้ำที่ม้า ดึงศอกขึ้นสูงเลยลำตัว" },
+      { name: "Face Pull + Rear Delt Fly",  sets: "3×15 / 2×15", tip: "Face Pull: ดึงมาที่ใบหน้า ศอกสูง · Rear Delt Fly: น้ำหนักเบา เน้น squeeze ไหล่หลัง", badge: "เพิ่ม RDF", badgeBg: "#EAF3DE", badgeFg: "#3B6D11" },
+      { name: "EZ Bar / DB Curl",           sets: "3×10–12",   tip: "ไม่แกว่งลำตัว ศอกล็อคข้างตัว บีบไบเซปที่ top" },
+      { name: "Hammer Curl",                sets: "2×12",      tip: "Neutral grip เน้น Brachialis เพิ่มความหนาแขน" },
+    ],
+    tipTitle: "💡 เคล็ดลับ Pull Day",
+    tipText: "Bent-over Row ต้องการ Core มากกว่า Seated Row — 3 ท่าแรกพัก 2–3 นาที · Face Pull + Rear Delt Fly ทำต่อกันได้เลย"
+  },
+  {
+    label: "Legs — ขา · สะโพก · น่อง · Core",
+    color: "#993C1D",
+    exercises: [
+      { name: "Barbell Squat",             sets: "4×8–10",      tip: "เท้ากว้างเท่าไหล่ เข่าตามนิ้วเท้า ลงให้ขาขนานพื้น" },
+      { name: "Romanian Deadlift (RDL)",   sets: "3×10–12",     tip: "สะโพกถอย หลังตรง รู้สึกตึงหลังขา = ถูกต้อง" },
+      { name: "Bulgarian Split Squat",     sets: "3×10/ข้าง",   tip: "เท้าหลังวางบนม้า เข่าหน้าตามนิ้วเท้า ลงช้าๆ — เริ่ม Bodyweight ก่อนแล้วค่อยถือ DB", badge: "ใหม่", badgeBg: "#EAF3DE", badgeFg: "#3B6D11" },
+      { name: "Hip Thrust (BB / Machine)", sets: "3×12–15",     tip: "สะโพกขึ้นจนลำตัวขนานพื้น บีบสะโพกที่ top ค้าง 1 วิ ทุก rep — นี่คือท่าสำคัญที่สุดของวัน", badge: "ใหม่", badgeBg: "#EAF3DE", badgeFg: "#3B6D11" },
+      { name: "Leg Curl (Lying/Seated)",   sets: "3×12–15",     tip: "เน้น Hamstring อย่าสะบัดขาช่วยตอน top" },
+      { name: "Standing Calf Raise",       sets: "3×15–20",     tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ", badge: "ลด 1 set", badgeBg: "#FFFBEB", badgeFg: "#92400E" },
+      { name: "Cable Crunch + Plank",      sets: "3×15 + 2×45วิ", tip: "Cable Crunch: ก้มจาก core ไม่ใช่คอ · Plank: สะโพกไม่ยกหรือตก หายใจสม่ำเสมอ", badge: "ปรับ", badgeBg: "#E6F1FB", badgeFg: "#185FA5" },
+    ],
+    tipTitle: "💡 เคล็ดลับ Legs Day",
+    tipText: "Bulgarian Split Squat จะหนักกว่าที่คิด ใช้ Bodyweight วันแรก · Hip Thrust: บีบสะโพกค้าง 1 วิที่ top = กุญแจสำคัญ · Squat + RDL พัก 2–3 นาที"
+  }
+];
+
+let currentDay = 0;
+
+function selectDay(i) {
+  currentDay = i;
+  document.querySelectorAll('.day-card').forEach((c, j) => {
+    c.classList.toggle('active', j === i);
+  });
+  renderDetail();
+}
+
+function renderDetail() {
+  const d = days[currentDay];
+  let html = `<div class="detail-title" style="color:${d.color};">${d.label}</div>`;
+  html += `<div class="rest-note">⏱ Compound: พัก 2–3 นาที &nbsp;·&nbsp; Isolation: พัก 60–90 วิ</div>`;
+  d.exercises.forEach((ex, i) => {
+    const badge = ex.badge
+      ? `<span class="ex-badge" style="background:${ex.badgeBg};color:${ex.badgeFg};">${ex.badge}</span>`
+      : '';
+    html += `
+      <div class="ex-row">
+        <div class="ex-num">${i + 1}</div>
+        <div>
+          <div class="ex-name">${ex.name}${badge}</div>
+          <div class="ex-tip">${ex.tip}</div>
+        </div>
+        <div class="ex-sets">${ex.sets}</div>
+      </div>`;
+  });
+  html += `<div class="tip-box"><div class="tip-label">${d.tipTitle}</div><div class="tip-text">${d.tipText}</div></div>`;
+  document.getElementById('detailBox').innerHTML = html;
+}
+
+renderDetail();
+</script>
+</body>
+</html>
