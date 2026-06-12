@@ -135,6 +135,24 @@
       font-size: 12px; font-weight: 700;
       padding: 4px 9px; white-space: nowrap;
     }
+    .ex-check {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px; flex-shrink: 0;
+      border: 1.5px solid var(--bdr2); border-radius: 4px;
+      background: var(--card); cursor: pointer;
+      margin-top: 1px; position: relative;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .ex-check:checked { background: var(--pur); border-color: var(--pur); }
+    .ex-check:checked::after {
+      content: ''; position: absolute;
+      left: 4px; top: 1px; width: 7px; height: 4px;
+      border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+      transform: rotate(-45deg);
+    }
+    .ex-row.done .ex-name { text-decoration: line-through; opacity: 0.45; }
+    .ex-row.done .ex-tip  { opacity: 0.35; }
+    .ex-row.done .ex-sets { opacity: 0.35; }
     .tip-box {
       background: var(--teal-bg); border-radius: var(--r-md);
       padding: 12px 14px; margin-top: 14px;
@@ -772,12 +790,12 @@ const days = [
     label: "Push — อก · ไหล่ · แขนหลัง",
     color: "#185FA5",
     exercises: [
-      { name: "Barbell Bench Press",     sets: "4×6–8",        tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้า 2 วิ แล้วดันขึ้นเร็ว" },
-      { name: "Overhead Press (DB/BB)",  sets: "3×8–10",       tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ ไม่ push forward", badge: "ย้ายขึ้น ↑", badgeBg: "#EEEDFE", badgeFg: "#534AB7" },
-      { name: "Incline Dumbbell Press",  sets: "3×10–12",      tip: "เอียง 30° เน้นอกส่วนบน ข้อศอกเปิด 45–75°" },
-      { name: "Lateral Raise",           sets: "3×15",         tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย ไม่ต้องหิ้วน้ำ" },
-      { name: "Cable Chest Fly",         sets: "2×12–15",      tip: "แขนโค้งเล็กน้อย ยืดอกให้สุดทุก rep บีบอกตรงกลาง", badge: "ลด 1 set", badgeBg: "#FFFBEB", badgeFg: "#92400E" },
-      { name: "Tricep Dips / Pushdown",  sets: "3×10–15",      tip: "Dips: ศอกชิดลำตัว ไม่แกว่ง · Pushdown: ศอกล็อค บีบแขนหลังให้สุด", badge: "ปรับ", badgeBg: "#E6F1FB", badgeFg: "#185FA5" },
+      { name: "Barbell Bench Press",        sets: "4×6–8",          tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้า 2 วิ แล้วดันขึ้นเร็ว" },
+      { name: "Overhead Press (DB/BB)",     sets: "3×8–10",         tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ ไม่ push forward" },
+      { name: "Incline Dumbbell Press",     sets: "3×10–12",        tip: "เอียง 30° เน้นอกส่วนบน ข้อศอกเปิด 45–75°" },
+      { name: "Lateral Raise",              sets: "3×15",           tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย ไม่ต้องหิ้วน้ำ" },
+      { name: "Cable Chest Fly",            sets: "2×12–15",        tip: "แขนโค้งเล็กน้อย ยืดอกให้สุดทุก rep บีบอกตรงกลาง" },
+      { name: "Tricep Dips / Pushdown",     sets: "3×10–15",        tip: "Dips: ศอกชิดลำตัว ไม่แกว่ง · Pushdown: ศอกล็อค บีบแขนหลังให้สุด" },
     ],
     tipTitle: "💡 เคล็ดลับ Push Day",
     tipText: "OHP ย้ายมาก่อน Incline เพราะต้องการไหล่ที่ยังไม่ล้า — Bench + OHP พัก 2–3 นาที · Isolation พัก 60–90 วิ"
@@ -786,12 +804,12 @@ const days = [
     label: "Pull — หลัง · สะบัก · แขนหน้า",
     color: "#3B6D11",
     exercises: [
-      { name: "Pull-ups / Lat Pulldown",    sets: "4×6–10",    tip: "Pull-ups: ดึงหน้าอกหาบาร์ · Lat Pulldown: ดึงลงที่คาง หน้าอกพอง ไม่แอ่นหลัง", badge: "ปรับ", badgeBg: "#E6F1FB", badgeFg: "#185FA5" },
-      { name: "Barbell Bent-over Row",      sets: "3×8–10",    tip: "หลังตรงเอียง 45° เข่างอเล็กน้อย ดึงบาร์มาที่สะดือ squeeze สะบักให้สุด", badge: "ใหม่", badgeBg: "#EAF3DE", badgeFg: "#3B6D11" },
-      { name: "Single-arm DB Row",          sets: "3×10–12",   tip: "วางมือค้ำที่ม้า ดึงศอกขึ้นสูงเลยลำตัว" },
-      { name: "Face Pull + Rear Delt Fly",  sets: "3×15 / 2×15", tip: "Face Pull: ดึงมาที่ใบหน้า ศอกสูง · Rear Delt Fly: น้ำหนักเบา เน้น squeeze ไหล่หลัง", badge: "เพิ่ม RDF", badgeBg: "#EAF3DE", badgeFg: "#3B6D11" },
-      { name: "EZ Bar / DB Curl",           sets: "3×10–12",   tip: "ไม่แกว่งลำตัว ศอกล็อคข้างตัว บีบไบเซปที่ top" },
-      { name: "Hammer Curl",                sets: "2×12",      tip: "Neutral grip เน้น Brachialis เพิ่มความหนาแขน" },
+      { name: "Pull-ups / Lat Pulldown",    sets: "4×6–10",         tip: "Pull-ups: ดึงหน้าอกหาบาร์ · Lat Pulldown: ดึงลงที่คาง หน้าอกพอง ไม่แอ่นหลัง" },
+      { name: "Barbell Bent-over Row",      sets: "3×8–10",         tip: "หลังตรงเอียง 45° เข่างอเล็กน้อย ดึงบาร์มาที่สะดือ squeeze สะบักให้สุด" },
+      { name: "Single-arm DB Row",          sets: "3×10–12",        tip: "วางมือค้ำที่ม้า ดึงศอกขึ้นสูงเลยลำตัว" },
+      { name: "Face Pull + Rear Delt Fly",  sets: "3×15 / 2×15",   tip: "Face Pull: ดึงมาที่ใบหน้า ศอกสูง · Rear Delt Fly: น้ำหนักเบา เน้น squeeze ไหล่หลัง" },
+      { name: "EZ Bar / DB Curl",           sets: "3×10–12",        tip: "ไม่แกว่งลำตัว ศอกล็อคข้างตัว บีบไบเซปที่ top" },
+      { name: "Hammer Curl",                sets: "2×12",           tip: "Neutral grip เน้น Brachialis เพิ่มความหนาแขน" },
     ],
     tipTitle: "💡 เคล็ดลับ Pull Day",
     tipText: "Bent-over Row ต้องการ Core มากกว่า Seated Row — 3 ท่าแรกพัก 2–3 นาที · Face Pull + Rear Delt Fly ทำต่อกันได้เลย"
@@ -800,13 +818,13 @@ const days = [
     label: "Legs — ขา · สะโพก · น่อง · Core",
     color: "#993C1D",
     exercises: [
-      { name: "Barbell Squat",             sets: "4×8–10",      tip: "เท้ากว้างเท่าไหล่ เข่าตามนิ้วเท้า ลงให้ขาขนานพื้น" },
-      { name: "Romanian Deadlift (RDL)",   sets: "3×10–12",     tip: "สะโพกถอย หลังตรง รู้สึกตึงหลังขา = ถูกต้อง" },
-      { name: "Bulgarian Split Squat",     sets: "3×10/ข้าง",   tip: "เท้าหลังวางบนม้า เข่าหน้าตามนิ้วเท้า ลงช้าๆ — เริ่ม Bodyweight ก่อนแล้วค่อยถือ DB", badge: "ใหม่", badgeBg: "#EAF3DE", badgeFg: "#3B6D11" },
-      { name: "Hip Thrust (BB / Machine)", sets: "3×12–15",     tip: "สะโพกขึ้นจนลำตัวขนานพื้น บีบสะโพกที่ top ค้าง 1 วิ ทุก rep — นี่คือท่าสำคัญที่สุดของวัน", badge: "ใหม่", badgeBg: "#EAF3DE", badgeFg: "#3B6D11" },
-      { name: "Leg Curl (Lying/Seated)",   sets: "3×12–15",     tip: "เน้น Hamstring อย่าสะบัดขาช่วยตอน top" },
-      { name: "Standing Calf Raise",       sets: "3×15–20",     tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ", badge: "ลด 1 set", badgeBg: "#FFFBEB", badgeFg: "#92400E" },
-      { name: "Cable Crunch + Plank",      sets: "3×15 + 2×45วิ", tip: "Cable Crunch: ก้มจาก core ไม่ใช่คอ · Plank: สะโพกไม่ยกหรือตก หายใจสม่ำเสมอ", badge: "ปรับ", badgeBg: "#E6F1FB", badgeFg: "#185FA5" },
+      { name: "Barbell Squat",              sets: "4×8–10",         tip: "เท้ากว้างเท่าไหล่ เข่าตามนิ้วเท้า ลงให้ขาขนานพื้น" },
+      { name: "Romanian Deadlift (RDL)",    sets: "3×10–12",        tip: "สะโพกถอย หลังตรง รู้สึกตึงหลังขา = ถูกต้อง" },
+      { name: "Bulgarian Split Squat",      sets: "3×10/ข้าง",      tip: "เท้าหลังวางบนม้า เข่าหน้าตามนิ้วเท้า ลงช้าๆ — เริ่ม Bodyweight ก่อนแล้วค่อยถือ DB" },
+      { name: "Hip Thrust (BB / Machine)",  sets: "3×12–15",        tip: "สะโพกขึ้นจนลำตัวขนานพื้น บีบสะโพกที่ top ค้าง 1 วิ ทุก rep — นี่คือท่าสำคัญที่สุดของวัน" },
+      { name: "Leg Curl (Lying/Seated)",    sets: "3×12–15",        tip: "เน้น Hamstring อย่าสะบัดขาช่วยตอน top" },
+      { name: "Standing Calf Raise",        sets: "3×15–20",        tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ" },
+      { name: "Cable Crunch + Plank",       sets: "3×15 + 2×45วิ",  tip: "Cable Crunch: ก้มจาก core ไม่ใช่คอ · Plank: สะโพกไม่ยกหรือตก หายใจสม่ำเสมอ" },
     ],
     tipTitle: "💡 เคล็ดลับ Legs Day",
     tipText: "Bulgarian Split Squat จะหนักกว่าที่คิด ใช้ Bodyweight วันแรก · Hip Thrust: บีบสะโพกค้าง 1 วิที่ top = กุญแจสำคัญ · Squat + RDL พัก 2–3 นาที"
@@ -814,6 +832,7 @@ const days = [
 ];
 
 let currentDay = 0;
+const doneState = {};
 
 function selectDay(i) {
   currentDay = i;
@@ -823,19 +842,22 @@ function selectDay(i) {
   renderDetail();
 }
 
+function toggleDone(dayIdx, exIdx, cb) {
+  doneState[`${dayIdx}-${exIdx}`] = cb.checked;
+  document.getElementById(`exrow-${dayIdx}-${exIdx}`).classList.toggle('done', cb.checked);
+}
+
 function renderDetail() {
   const d = days[currentDay];
   let html = `<div class="detail-title" style="color:${d.color};">${d.label}</div>`;
   html += `<div class="rest-note">⏱ Compound: พัก 2–3 นาที &nbsp;·&nbsp; Isolation: พัก 60–90 วิ</div>`;
   d.exercises.forEach((ex, i) => {
-    const badge = ex.badge
-      ? `<span class="ex-badge" style="background:${ex.badgeBg};color:${ex.badgeFg};">${ex.badge}</span>`
-      : '';
+    const done = doneState[`${currentDay}-${i}`] || false;
     html += `
-      <div class="ex-row">
-        <div class="ex-num">${i + 1}</div>
+      <div class="ex-row${done ? ' done' : ''}" id="exrow-${currentDay}-${i}">
+        <input type="checkbox" class="ex-check"${done ? ' checked' : ''} onchange="toggleDone(${currentDay},${i},this)">
         <div>
-          <div class="ex-name">${ex.name}${badge}</div>
+          <div class="ex-name">${ex.name}</div>
           <div class="ex-tip">${ex.tip}</div>
         </div>
         <div class="ex-sets">${ex.sets}</div>
