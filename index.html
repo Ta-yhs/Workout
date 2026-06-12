@@ -346,6 +346,15 @@
     }
     .theme-btn:hover { background: var(--bdr2); color: var(--text1); }
 
+    /* ── Shuffle button ── */
+    .shuffle-btn {
+      border: none; background: var(--pur-bg); color: var(--pur);
+      border-radius: var(--r-md); padding: 8px 14px; cursor: pointer;
+      font-size: 13px; font-weight: 600; font-family: var(--font);
+      white-space: nowrap; transition: opacity 0.15s;
+    }
+    .shuffle-btn:hover { opacity: 0.75; }
+
     /* ── Dark mode ── */
     html.dark {
       --text1:   #f3f4f6;
@@ -375,7 +384,7 @@
       <p class="app-sub">Body Recomp · 72 kg · 173 cm · หุ่นนักกีฬา</p>
     </div>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
-      <i id="theme-icon" class="ti ti-moon" aria-hidden="true"></i>
+      <span id="theme-icon" style="font-size:18px;line-height:1;">🌙</span>
     </button>
   </div>
 
@@ -575,109 +584,52 @@
               <td>0.3 g</td>
               <td>ทุกมื้อหลัก</td>
             </tr>
+            <tr style="background:var(--green-bg);">
+              <td>
+                <div class="food-name">กล้วย (1 ลูก)</div>
+                <div class="food-en">Banana (~120 g)</div>
+              </td>
+              <td><span class="pill-c">27 g คาร์บ</span></td>
+              <td>107</td>
+              <td>0.4 g</td>
+              <td>เช้า / Pre-workout</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
 
     <!-- Meal plan -->
-    <p class="s-title">ตัวอย่างมื้ออาหาร 1 วัน</p>
-
-    <div class="meal-list">
-
-      <div class="meal-card">
-        <div class="meal-head">
-          <span class="meal-badge" style="background:var(--pur-bg);color:var(--pur);">07:00</span>
-          <span class="meal-ttl">อาหารเช้า</span>
-          <span class="meal-kcal">~425 kcal</span>
-        </div>
-        <ul class="meal-items">
-          <li>โยเกิร์ตกรีก 200 g</li>
-          <li>นม 1 แก้ว (250 ml)</li>
-          <li>ข้าวสวย 1 ทัพพี (100 g)</li>
-          <li>ผักต้ม / ผักสด 100 g</li>
-        </ul>
-        <div class="meal-macros">
-          <div class="mm">โปรตีน <b>32 g</b></div>
-          <div class="mm">kcal <b>~425</b> · คาร์บ <b>~38 g</b></div>
-        </div>
-      </div>
-
-      <div class="meal-card">
-        <div class="meal-head">
-          <span class="meal-badge" style="background:var(--blue-bg);color:var(--blue);">12:00</span>
-          <span class="meal-ttl">อาหารกลางวัน</span>
-          <span class="meal-kcal">~685 kcal</span>
-        </div>
-        <ul class="meal-items">
-          <li>ไก่อก 200 g (ต้ม / ย่าง)</li>
-          <li>ข้าวสวย 1.5 ทัพพี (150 g)</li>
-          <li>ผักรวม 200 g</li>
-        </ul>
-        <div class="meal-macros">
-          <div class="mm">โปรตีน <b>66 g</b></div>
-          <div class="mm">kcal <b>~685</b> · คาร์บ <b>~46 g</b></div>
-        </div>
-      </div>
-
-      <div class="meal-card">
-        <div class="meal-head">
-          <span class="meal-badge" style="background:var(--teal-bg);color:var(--teal);">15:30</span>
-          <span class="meal-ttl">Pre-Workout Snack</span>
-          <span class="meal-kcal">~152 kcal</span>
-        </div>
-        <ul class="meal-items">
-          <li>นม 1 แก้ว (250 ml)</li>
-          <li>กินก่อนออกกำลังกาย 60–90 นาที</li>
-        </ul>
-        <div class="meal-macros">
-          <div class="mm">โปรตีน <b>8 g</b></div>
-          <div class="mm">คาร์บ <b>12 g</b></div>
-        </div>
-      </div>
-
-      <div class="meal-card">
-        <div class="meal-head">
-          <span class="meal-badge" style="background:var(--org-bg);color:var(--org);">19:00</span>
-          <span class="meal-ttl">อาหารเย็น</span>
-          <span class="meal-kcal">~640 kcal</span>
-        </div>
-        <ul class="meal-items">
-          <li>เนื้อวัว หรือ หมูสันใน 200 g (ย่าง / นึ่ง)</li>
-          <li>ข้าวสวย 1 ทัพพี (100 g)</li>
-          <li>ผักรวม 200 g</li>
-        </ul>
-        <div class="meal-macros">
-          <div class="mm">โปรตีน <b>56 g</b></div>
-          <div class="mm">kcal <b>~640</b> · คาร์บ <b>~28 g</b></div>
-        </div>
-      </div>
-
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px;">
+      <p class="s-title" style="margin:0;">ตัวอย่างมื้ออาหาร 1 วัน</p>
+      <button class="shuffle-btn" onclick="shuffleMeals()">🔀 สุ่มเมนู</button>
     </div>
+
+    <div id="meal-list" class="meal-list"></div>
 
     <!-- Day total -->
     <div class="day-total">
-      <div class="day-total-title">ยอดรวมทั้งวัน (รวมข้าวสวยทุกมื้อ)</div>
+      <div class="day-total-title">ยอดรวมทั้งวัน</div>
       <div class="day-total-grid">
         <div>
-          <div class="dt-val" style="color:var(--pur);">~2,100</div>
-          <div class="dt-lbl" style="color:var(--pur-d);">kcal ✓</div>
+          <div class="dt-val" id="dt-kcal" style="color:var(--pur);">—</div>
+          <div class="dt-lbl" style="color:var(--pur-d);">kcal</div>
         </div>
         <div>
-          <div class="dt-val" style="color:var(--blue);">~162 g</div>
-          <div class="dt-lbl" style="color:var(--blue);">โปรตีน ✓</div>
+          <div class="dt-val" id="dt-prot" style="color:var(--blue);">—</div>
+          <div class="dt-lbl" style="color:var(--blue);">โปรตีน</div>
         </div>
         <div>
-          <div class="dt-val" style="color:var(--green);">~112 g</div>
-          <div class="dt-lbl" style="color:var(--green);">คาร์บ ✓</div>
+          <div class="dt-val" id="dt-carb" style="color:var(--green);">—</div>
+          <div class="dt-lbl" style="color:var(--green);">คาร์บ</div>
         </div>
         <div>
-          <div class="dt-val" style="color:var(--teal);">~60 g</div>
+          <div class="dt-val" style="color:var(--teal);">~40–60 g</div>
           <div class="dt-lbl" style="color:var(--teal);">ไขมัน</div>
         </div>
       </div>
       <div class="dt-note">
-        โปรตีน ✓ และคาร์บ ✓ ดีมาก — เพิ่มข้าวอีก 1 ทัพพีต่อมื้อ เพื่อให้ครบ <b>~2,400 kcal</b> ตามเป้า
+        เพิ่มข้าว 1 ทัพพีต่อมื้อเพื่อให้ครบ <b>~2,400 kcal</b> — กด 🔀 เพื่อดูเมนูใหม่
       </div>
     </div>
 
@@ -830,7 +782,7 @@
 <script>
 function initTheme() {
   if (document.documentElement.classList.contains('dark')) {
-    document.getElementById('theme-icon').className = 'ti ti-sun';
+    document.getElementById('theme-icon').textContent = '☀️';
   }
 }
 initTheme();
@@ -838,8 +790,95 @@ initTheme();
 function toggleTheme() {
   const dark = document.documentElement.classList.toggle('dark');
   localStorage.setItem('theme', dark ? 'dark' : 'light');
-  document.getElementById('theme-icon').className = dark ? 'ti ti-sun' : 'ti ti-moon';
+  document.getElementById('theme-icon').textContent = dark ? '☀️' : '🌙';
 }
+
+/* ── Meal shuffle system ── */
+const mealPools = {
+  breakfast: [
+    { items:["โยเกิร์ตกรีก 200 g","นม 1 แก้ว (250 ml)","ข้าวสวย 100 g","ผักต้ม 100 g"],       prot:33, carb:52, kcal:425 },
+    { items:["โยเกิร์ตกรีก 200 g","นม 1 แก้ว (250 ml)","กล้วย 2 ลูก"],                        prot:31, carb:73, kcal:484 },
+    { items:["โยเกิร์ตกรีก 150 g","นม 1 แก้ว (250 ml)","ข้าวสวย 100 g","กล้วย 1 ลูก"],       prot:27, carb:72, kcal:477 },
+    { items:["นม 1 แก้ว (250 ml)","ข้าวสวย 150 g","กล้วย 1 ลูก","ผักสด 100 g"],              prot:15, carb:86, kcal:479 },
+    { items:["โยเกิร์ตกรีก 200 g","กล้วย 2 ลูก","ข้าวสวย 100 g"],                            prot:25, carb:89, kcal:462 },
+    { items:["นม 2 แก้ว (500 ml)","โยเกิร์ตกรีก 100 g","กล้วย 1 ลูก"],                       prot:27, carb:55, kcal:470 },
+  ],
+  lunch: [
+    { items:["ไก่อก 200 g (ต้ม / ย่าง)","ข้าวสวย 150 g","ผักรวม 200 g"],                     prot:70, carb:52, kcal:575 },
+    { items:["หมูสันใน 200 g (นึ่ง)","ข้าวสวย 150 g","ผักรวม 200 g"],                         prot:62, carb:52, kcal:531 },
+    { items:["เนื้อวัว 150 g (ย่าง)","ข้าวสวย 150 g","ผักรวม 200 g"],                         prot:47, carb:52, kcal:575 },
+    { items:["ไก่อก 150 g + หมูสันใน 100 g","ข้าวสวย 100 g","ผักรวม 200 g"],                 prot:80, carb:38, kcal:571 },
+    { items:["ไก่อก 200 g (ย่าง)","ข้าวสวย 200 g","ผักรวม 200 g"],                           prot:71, carb:66, kcal:640 },
+    { items:["หมูสันใน 200 g","ข้าวสวย 150 g","ผักรวม 200 g","นม 1 แก้ว"],                   prot:70, carb:64, kcal:683 },
+  ],
+  preworkout: [
+    { items:["นม 1 แก้ว (250 ml)","กินก่อนออกกำลัง 60–90 นาที"],                             prot:8,  carb:12, kcal:152 },
+    { items:["นม 1 แก้ว (250 ml)","กล้วย 1 ลูก"],                                             prot:9,  carb:39, kcal:259 },
+    { items:["โยเกิร์ตกรีก 150 g","กล้วย 1 ลูก"],                                             prot:16, carb:32, kcal:195 },
+    { items:["กล้วย 2 ลูก","นม 1 แก้ว (250 ml)"],                                             prot:11, carb:66, kcal:366 },
+  ],
+  dinner: [
+    { items:["เนื้อวัว 200 g (ย่าง)","ข้าวสวย 100 g","ผักรวม 200 g"],                         prot:59, carb:38, kcal:620 },
+    { items:["หมูสันใน 200 g (นึ่ง)","ข้าวสวย 150 g","ผักรวม 200 g"],                         prot:62, carb:52, kcal:531 },
+    { items:["ไก่อก 200 g (ย่าง)","ข้าวสวย 150 g","ผักรวม 200 g"],                            prot:70, carb:52, kcal:575 },
+    { items:["เนื้อวัว 150 g + หมูสันใน 100 g","ข้าวสวย 100 g","ผักรวม 200 g"],              prot:73, carb:38, kcal:653 },
+    { items:["หมูสันใน 200 g","ข้าวสวย 100 g","ผักรวม 200 g","นม 1 แก้ว"],                   prot:69, carb:50, kcal:618 },
+    { items:["ไก่อก 150 g + เนื้อวัว 100 g","ข้าวสวย 100 g","ผักรวม 200 g"],                 prot:79, carb:38, kcal:648 },
+  ],
+};
+
+const mealMeta = [
+  { key:'breakfast',  time:'07:00', title:'อาหารเช้า',         badge:'background:var(--pur-bg);color:var(--pur);'   },
+  { key:'lunch',      time:'12:00', title:'อาหารกลางวัน',      badge:'background:var(--blue-bg);color:var(--blue);' },
+  { key:'preworkout', time:'15:30', title:'Pre-Workout Snack',  badge:'background:var(--teal-bg);color:var(--teal);' },
+  { key:'dinner',     time:'19:00', title:'อาหารเย็น',          badge:'background:var(--org-bg);color:var(--org);'   },
+];
+
+const _ms = {};
+function _shuffle(a) {
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function _initMeals() {
+  for (const k in mealPools) {
+    const n = mealPools[k].length;
+    _ms[k] = { order: _shuffle([...Array(n).keys()]), cursor: 0 };
+  }
+}
+function _next(key) {
+  const s = _ms[key];
+  if (s.cursor >= s.order.length) { _shuffle(s.order); s.cursor = 0; }
+  return mealPools[key][s.order[s.cursor++]];
+}
+function shuffleMeals() {
+  let tk = 0, tp = 0, tc = 0;
+  const html = mealMeta.map(m => {
+    const o = _next(m.key);
+    tk += o.kcal; tp += o.prot; tc += o.carb;
+    const lis = o.items.map(i => `<li>${i}</li>`).join('');
+    return `<div class="meal-card">
+  <div class="meal-head">
+    <span class="meal-badge" style="${m.badge}">${m.time}</span>
+    <span class="meal-ttl">${m.title}</span>
+    <span class="meal-kcal">~${o.kcal} kcal</span>
+  </div>
+  <ul class="meal-items">${lis}</ul>
+  <div class="meal-macros">
+    <div class="mm">โปรตีน <b>${o.prot} g</b></div>
+    <div class="mm">คาร์บ <b>~${o.carb} g</b></div>
+  </div>
+</div>`;
+  }).join('');
+  document.getElementById('meal-list').innerHTML = html;
+  document.getElementById('dt-kcal').textContent = '~' + tk.toLocaleString();
+  document.getElementById('dt-prot').textContent = '~' + tp + ' g';
+  document.getElementById('dt-carb').textContent = '~' + tc + ' g';
+}
+_initMeals();
+shuffleMeals();
 
 function switchTab(name) {
   const names = ['workout','nutrition','overload'];
