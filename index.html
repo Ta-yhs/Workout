@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PPL Program — 72 kg · 173 cm</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/tabler-icons.min.css">
+  <script>(function(){var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d)document.documentElement.classList.add('dark');})();</script>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     :root {
@@ -25,6 +26,8 @@
       --pur:   #534AB7;  --pur-bg:   #EEEDFE;
       --pur-d: #3C3489;
       --teal:  #0F6E56;  --teal-bg:  #E1F5EE;
+      --note-bg: #FFFBEB; --note-text: #92400E; --note-border: #F59E0B;
+      --warn-bg: #FEF2F2; --warn-text: #7F1D1D; --warn-border: #EF4444;
     }
     html, body { margin: 0; padding: 0; }
     body {
@@ -194,19 +197,19 @@
 
     /* Note / warn boxes */
     .note-box {
-      border-left: 3px solid #F59E0B; background: #FFFBEB;
+      border-left: 3px solid var(--note-border); background: var(--note-bg);
       border-radius: 0 var(--r-md) var(--r-md) 0;
       padding: 12px 14px; margin-bottom: 14px;
     }
-    .note-box p { font-size: 13px; color: #92400E; line-height: 1.65; margin: 0; }
+    .note-box p { font-size: 13px; color: var(--note-text); line-height: 1.65; margin: 0; }
     .note-box p + p { margin-top: 6px; }
 
     .warn-box {
-      border-left: 3px solid #EF4444; background: #FEF2F2;
+      border-left: 3px solid var(--warn-border); background: var(--warn-bg);
       border-radius: 0 var(--r-md) var(--r-md) 0;
       padding: 12px 14px; margin-bottom: 14px;
     }
-    .warn-box p { font-size: 13px; color: #7F1D1D; line-height: 1.65; margin: 0; }
+    .warn-box p { font-size: 13px; color: var(--warn-text); line-height: 1.65; margin: 0; }
 
     /* Food table */
     .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -326,14 +329,54 @@
       .meal-head { gap: 6px; }
       .meal-badge { font-size: 10px; }
     }
+
+    /* ── Carb pill ── */
+    .pill-c {
+      background: var(--green-bg); color: var(--green);
+      font-weight: 700; padding: 3px 9px;
+      border-radius: 99px; font-size: 12px; white-space: nowrap;
+    }
+
+    /* ── Theme toggle button ── */
+    .theme-btn {
+      border: none; background: var(--muted); color: var(--text2);
+      border-radius: var(--r-md); padding: 7px 10px; cursor: pointer;
+      font-size: 17px; line-height: 1; flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+    .theme-btn:hover { background: var(--bdr2); color: var(--text1); }
+
+    /* ── Dark mode ── */
+    html.dark {
+      --text1:   #f3f4f6;
+      --text2:   #9ca3af;
+      --bg:      #111827;
+      --card:    #1f2937;
+      --muted:   #374151;
+      --bdr:     #374151;
+      --bdr2:    #4b5563;
+      --blue:    #60a5fa;  --blue-bg:  #1e3a5f;
+      --green:   #4ade80;  --green-bg: #14532d;
+      --org:     #fb923c;  --org-bg:   #431407;
+      --pur:     #a78bfa;  --pur-bg:   #2e1065;
+      --pur-d:   #c4b5fd;
+      --teal:    #2dd4bf;  --teal-bg:  #042f2e;
+      --note-bg: #1a1200; --note-text: #fcd34d; --note-border: #d97706;
+      --warn-bg: #200000; --warn-text: #fca5a5; --warn-border: #dc2626;
+    }
   </style>
 </head>
 <body>
 <div class="app">
 
-  <div class="app-header">
-    <p class="app-title">โปรแกรม PPL</p>
-    <p class="app-sub">Body Recomp · 72 kg · 173 cm · หุ่นนักกีฬา</p>
+  <div class="app-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+    <div>
+      <p class="app-title">โปรแกรม PPL</p>
+      <p class="app-sub">Body Recomp · 72 kg · 173 cm · หุ่นนักกีฬา</p>
+    </div>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <i id="theme-icon" class="ti ti-moon" aria-hidden="true"></i>
+    </button>
   </div>
 
   <!-- ── Tabs ── -->
@@ -439,23 +482,23 @@
       </div>
     </div>
 
-    <!-- Carb warning -->
-    <div class="note-box">
-      <p><b>⚠️ ขาดคาร์บ:</b> อาหารที่เลือก (ผัก นม หมู วัว ไก่ โยเกิร์ต) ให้โปรตีนและไขมันสูง แต่คาร์บน้อยมาก — ทำให้ได้ประมาณ 1,500 kcal เท่านั้น</p>
-      <p>เพื่อหุ่นนักกีฬา ควรเพิ่ม <b>ข้าวสวย</b> หรือ <b>มันเทศ</b> ทุกมื้อ เพื่อให้ได้พลังงานเพียงพอและกล้ามเนื้อไม่สลาย</p>
+    <!-- Rice as main carb source -->
+    <div class="tip-box" style="margin-bottom:14px;margin-top:0;">
+      <div class="tip-label">ข้าวสวย = แหล่งพลังงานหลัก</div>
+      <div class="tip-text">ข้าวสวย 100 g ให้คาร์บ 28 g และพลังงาน 130 kcal — ทุกมื้อหลักมีข้าว 100–150 g ทำให้ได้ ~2,100 kcal/วัน เพียงพอสำหรับออกกำลังกายและกล้ามเนื้อไม่สลาย</div>
     </div>
 
     <!-- Food table -->
     <div class="card">
       <div class="card-header">
-        <p class="card-title">โปรตีนต่อมื้อจากอาหารของคุณ (ต่อ 100 g)</p>
+        <p class="card-title">แหล่งอาหารหลักของคุณ (ต่อ 100 g)</p>
       </div>
       <div class="tbl-wrap">
         <table class="food-tbl">
           <thead>
             <tr>
               <th>อาหาร</th>
-              <th>โปรตีน</th>
+              <th>โปรตีน / คาร์บ</th>
               <th>kcal</th>
               <th>ไขมัน</th>
               <th>เวลาที่ดี</th>
@@ -522,6 +565,16 @@
               <td>0.2 g</td>
               <td>ทุกมื้อ</td>
             </tr>
+            <tr style="background:var(--green-bg);">
+              <td>
+                <div class="food-name">ข้าวสวย</div>
+                <div class="food-en">Cooked White Rice</div>
+              </td>
+              <td><span class="pill-c">28 g คาร์บ</span></td>
+              <td>130</td>
+              <td>0.3 g</td>
+              <td>ทุกมื้อหลัก</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -536,17 +589,17 @@
         <div class="meal-head">
           <span class="meal-badge" style="background:var(--pur-bg);color:var(--pur);">07:00</span>
           <span class="meal-ttl">อาหารเช้า</span>
-          <span class="meal-kcal">~295 kcal</span>
+          <span class="meal-kcal">~425 kcal</span>
         </div>
         <ul class="meal-items">
           <li>โยเกิร์ตกรีก 200 g</li>
           <li>นม 1 แก้ว (250 ml)</li>
+          <li>ข้าวสวย 1 ทัพพี (100 g)</li>
           <li>ผักต้ม / ผักสด 100 g</li>
-          <li style="color:#92400E;font-weight:600;">+ ข้าวสวย 1 ทัพพี (~100 g) → +130 kcal ✓ แนะนำ</li>
         </ul>
         <div class="meal-macros">
-          <div class="mm">โปรตีน <b>30 g</b></div>
-          <div class="mm">kcal <b>~295</b> (หรือ <b>~425</b> ถ้าใส่ข้าว)</div>
+          <div class="mm">โปรตีน <b>32 g</b></div>
+          <div class="mm">kcal <b>~425</b> · คาร์บ <b>~38 g</b></div>
         </div>
       </div>
 
@@ -554,16 +607,16 @@
         <div class="meal-head">
           <span class="meal-badge" style="background:var(--blue-bg);color:var(--blue);">12:00</span>
           <span class="meal-ttl">อาหารกลางวัน</span>
-          <span class="meal-kcal">~490 kcal</span>
+          <span class="meal-kcal">~685 kcal</span>
         </div>
         <ul class="meal-items">
           <li>ไก่อก 200 g (ต้ม / ย่าง)</li>
+          <li>ข้าวสวย 1.5 ทัพพี (150 g)</li>
           <li>ผักรวม 200 g</li>
-          <li style="color:#92400E;font-weight:600;">+ ข้าวสวย 1.5 ทัพพี (~150 g) → +195 kcal ✓ แนะนำ</li>
         </ul>
         <div class="meal-macros">
           <div class="mm">โปรตีน <b>66 g</b></div>
-          <div class="mm">kcal <b>~490</b> (หรือ <b>~685</b> ถ้าใส่ข้าว)</div>
+          <div class="mm">kcal <b>~685</b> · คาร์บ <b>~46 g</b></div>
         </div>
       </div>
 
@@ -587,16 +640,16 @@
         <div class="meal-head">
           <span class="meal-badge" style="background:var(--org-bg);color:var(--org);">19:00</span>
           <span class="meal-ttl">อาหารเย็น</span>
-          <span class="meal-kcal">~510 kcal</span>
+          <span class="meal-kcal">~640 kcal</span>
         </div>
         <ul class="meal-items">
           <li>เนื้อวัว หรือ หมูสันใน 200 g (ย่าง / นึ่ง)</li>
+          <li>ข้าวสวย 1 ทัพพี (100 g)</li>
           <li>ผักรวม 200 g</li>
-          <li style="color:#92400E;font-weight:600;">+ มันเทศ 150 g (~130 kcal) หรือข้าว 1 ทัพพี ✓ แนะนำ</li>
         </ul>
         <div class="meal-macros">
           <div class="mm">โปรตีน <b>56 g</b></div>
-          <div class="mm">kcal <b>~510</b> (หรือ <b>~640</b> ถ้าใส่คาร์บ)</div>
+          <div class="mm">kcal <b>~640</b> · คาร์บ <b>~28 g</b></div>
         </div>
       </div>
 
@@ -604,28 +657,27 @@
 
     <!-- Day total -->
     <div class="day-total">
-      <div class="day-total-title">ยอดรวมทั้งวัน (จากอาหารที่คุณกิน)</div>
+      <div class="day-total-title">ยอดรวมทั้งวัน (รวมข้าวสวยทุกมื้อ)</div>
       <div class="day-total-grid">
         <div>
-          <div class="dt-val" style="color:var(--pur);">~1,450</div>
-          <div class="dt-lbl" style="color:var(--pur-d);">kcal</div>
+          <div class="dt-val" style="color:var(--pur);">~2,100</div>
+          <div class="dt-lbl" style="color:var(--pur-d);">kcal ✓</div>
         </div>
         <div>
-          <div class="dt-val" style="color:var(--blue);">160 g</div>
+          <div class="dt-val" style="color:var(--blue);">~162 g</div>
           <div class="dt-lbl" style="color:var(--blue);">โปรตีน ✓</div>
         </div>
         <div>
-          <div class="dt-val" style="color:var(--org);">~30 g</div>
-          <div class="dt-lbl" style="color:var(--org);">คาร์บ ⚠️</div>
+          <div class="dt-val" style="color:var(--green);">~112 g</div>
+          <div class="dt-lbl" style="color:var(--green);">คาร์บ ✓</div>
         </div>
         <div>
-          <div class="dt-val" style="color:var(--green);">~60 g</div>
-          <div class="dt-lbl" style="color:var(--green);">ไขมัน</div>
+          <div class="dt-val" style="color:var(--teal);">~60 g</div>
+          <div class="dt-lbl" style="color:var(--teal);">ไขมัน</div>
         </div>
       </div>
       <div class="dt-note">
-        โปรตีน ✓ ดีมาก — แต่ยังขาดแคลอรี่ประมาณ <b>950 kcal</b> จากเป้า 2,400 kcal<br>
-        เพิ่มข้าวสวย/มันเทศ ตามที่แนะนำในแต่ละมื้อ → จะได้ <b>~2,100–2,400 kcal</b> ✓
+        โปรตีน ✓ และคาร์บ ✓ ดีมาก — เพิ่มข้าวอีก 1 ทัพพีต่อมื้อ เพื่อให้ครบ <b>~2,400 kcal</b> ตามเป้า
       </div>
     </div>
 
@@ -776,6 +828,19 @@
 </div>
 
 <script>
+function initTheme() {
+  if (document.documentElement.classList.contains('dark')) {
+    document.getElementById('theme-icon').className = 'ti ti-sun';
+  }
+}
+initTheme();
+
+function toggleTheme() {
+  const dark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+  document.getElementById('theme-icon').className = dark ? 'ti ti-sun' : 'ti ti-moon';
+}
+
 function switchTab(name) {
   const names = ['workout','nutrition','overload'];
   document.querySelectorAll('.tab-btn').forEach((btn, i) => {
