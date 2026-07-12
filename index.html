@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PPL Program — 72 kg · 173 cm</title>
+  <title>Upper/Lower Program — 72 kg · 173 cm</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/tabler-icons.min.css">
   <script>(function(){var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d)document.documentElement.classList.add('dark');})();</script>
   <style>
@@ -94,7 +94,7 @@
 
     /* ── Day grid ── */
     .day-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
+      display: grid; grid-template-columns: repeat(2, 1fr);
       gap: 10px; margin-bottom: 14px;
     }
     .day-card {
@@ -113,6 +113,7 @@
     .push  { background: var(--blue-bg);  color: var(--blue);  }
     .pull  { background: var(--green-bg); color: var(--green); }
     .legs  { background: var(--org-bg);   color: var(--org);   }
+    .upb   { background: var(--pur-bg);   color: var(--pur);   }
     .day-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
     .day-sub  { font-size: 11px; color: var(--text2); }
     .chips    { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
@@ -380,8 +381,8 @@
 
   <div class="app-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
     <div>
-      <p class="app-title">โปรแกรม PPL</p>
-      <p class="app-sub">Body Recomp · 72 kg · 173 cm · หุ่นนักกีฬา</p>
+      <p class="app-title">โปรแกรม Upper/Lower</p>
+      <p class="app-sub">Lean &amp; Defined · 72 kg · 173 cm · 4 วัน/สัปดาห์</p>
     </div>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
       <span id="theme-icon" style="font-size:18px;line-height:1;">🌙</span>
@@ -403,58 +404,102 @@
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-label">รูปแบบ</div>
-        <div class="stat-val" style="font-size:15px;padding-top:3px;">PPL Split</div>
+        <div class="stat-val" style="font-size:13px;padding-top:3px;">Upper/Lower<br><span style="font-size:10px;font-weight:400;color:var(--text2);">4 วัน/สัปดาห์</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-label">เวลา/วัน</div>
-        <div class="stat-val">60<small> นาที</small></div>
+        <div class="stat-val" style="font-size:13px;padding-top:3px;">60–90 น.<br><span style="font-size:10px;font-weight:400;color:var(--text2);">รวมคาร์ดิโอ</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-label">พัก/เซ็ต</div>
-        <div class="stat-val" style="font-size:13px;padding-top:3px;">2–3 น.<br><span style="font-size:10px;font-weight:400;color:var(--text2);">60–90 วิ isolation</span></div>
+        <div class="stat-val" style="font-size:13px;padding-top:3px;">60–90 วิ<br><span style="font-size:10px;font-weight:400;color:var(--text2);">2–3 น. ท่าหนัก</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-label">เป้าหมาย</div>
-        <div class="stat-val" style="font-size:15px;padding-top:3px;">Recomp</div>
+        <div class="stat-val" style="font-size:13px;padding-top:3px;">Lean &amp; Defined<br><span style="font-size:10px;font-weight:400;color:var(--text2);">10–12% BF</span></div>
       </div>
     </div>
 
     <div class="day-grid" id="dayGrid">
       <div class="day-card active" onclick="selectDay(0)">
         <span class="day-tag push">จันทร์</span>
-        <div class="day-name">Push</div>
-        <div class="day-sub">อก · ไหล่ · แขนหลัง</div>
+        <div class="day-name">Upper A</div>
+        <div class="day-sub">อก · หลัง · ไหล่ · แขนหลัง</div>
         <div class="chips">
           <span class="chip">Chest</span>
+          <span class="chip">Back</span>
           <span class="chip">Shoulders</span>
           <span class="chip">Triceps</span>
         </div>
       </div>
       <div class="day-card" onclick="selectDay(1)">
-        <span class="day-tag pull">พุธ</span>
-        <div class="day-name">Pull</div>
-        <div class="day-sub">หลัง · สะบัก · แขนหน้า</div>
+        <span class="day-tag pull">อังคาร</span>
+        <div class="day-name">Lower A</div>
+        <div class="day-sub">ขา · น่อง · Core</div>
         <div class="chips">
+          <span class="chip">Quads</span>
+          <span class="chip">Hamstrings</span>
+          <span class="chip">Calves</span>
+          <span class="chip">Core</span>
+        </div>
+      </div>
+      <div class="day-card" onclick="selectDay(2)">
+        <span class="day-tag upb">พฤหัส</span>
+        <div class="day-name">Upper B</div>
+        <div class="day-sub">อกบน · หลัง · ไหล่ · แขนหน้า</div>
+        <div class="chips">
+          <span class="chip">Chest</span>
           <span class="chip">Back</span>
           <span class="chip">Rear Delt</span>
           <span class="chip">Biceps</span>
         </div>
       </div>
-      <div class="day-card" onclick="selectDay(2)">
+      <div class="day-card" onclick="selectDay(3)">
         <span class="day-tag legs">ศุกร์</span>
-        <div class="day-name">Legs</div>
-        <div class="day-sub">ขา · สะโพก · น่อง · Core</div>
+        <div class="day-name">Lower B</div>
+        <div class="day-sub">Deadlift · สะโพก · Core</div>
         <div class="chips">
-          <span class="chip">Quads</span>
-          <span class="chip">Hamstrings</span>
+          <span class="chip">Posterior</span>
           <span class="chip">Glutes</span>
-          <span class="chip">Calves</span>
+          <span class="chip">Quads</span>
           <span class="chip">Core</span>
         </div>
       </div>
     </div>
 
     <div class="detail-box" id="detailBox"></div>
+
+    <!-- Weekly schedule + cardio -->
+    <div class="card" style="margin-top:14px;">
+      <div class="card-header">
+        <p class="card-title">ตารางสัปดาห์ + คาร์ดิโอ (เดินชัน)</p>
+      </div>
+      <div class="tbl-wrap">
+        <table class="food-tbl">
+          <thead>
+            <tr>
+              <th>วัน</th>
+              <th>เวท</th>
+              <th>คาร์ดิโอหลังเวท</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>จันทร์</td><td><b>Upper A</b></td><td>เดินชัน 30–45 นาที</td></tr>
+            <tr><td>อังคาร</td><td><b>Lower A</b></td><td>เดินชัน 20–25 นาที</td></tr>
+            <tr><td>พุธ</td><td>พัก</td><td>คาร์ดิโอเบา 25–30 นาที หรือ HIIT 1 ครั้ง</td></tr>
+            <tr><td>พฤหัส</td><td><b>Upper B</b></td><td>เดินชัน 30–45 นาที</td></tr>
+            <tr><td>ศุกร์</td><td><b>Lower B</b></td><td>เดินชัน 20–25 นาที</td></tr>
+            <tr><td>เสาร์</td><td>พัก</td><td>คาร์ดิโอเบาๆ (ถ้าไหว)</td></tr>
+            <tr><td>อาทิตย์</td><td>พักเต็มที่</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:14px;">
+      <p><b>⚠️ คาร์ดิโอทำหลังเวทเสมอ</b> ไม่ทำก่อน เพื่อไม่ให้แรงยกตก · วันขาลดเวลาคาร์ดิโอลง ไม่ให้ขาล้าสะสมจนกระทบฟอร์ม</p>
+      <p>เดินชันเผาเพิ่ม <b>~250–400 kcal/ครั้ง</b> — ต้องกินโปรตีน+แคลอรี่ให้พอ ไม่งั้นเสี่ยงกล้ามลีบแทนที่จะโต</p>
+    </div>
 
   </div>
 
@@ -891,47 +936,60 @@ function switchTab(name) {
 
 const days = [
   {
-    label: "Push — อก · ไหล่ · แขนหลัง",
+    label: "Upper A — อก · หลัง · ไหล่ · แขนหลัง",
     color: "#185FA5",
     exercises: [
-      { name: "Barbell Bench Press",        sets: "4×6–8",          tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้า 2 วิ แล้วดันขึ้นเร็ว" },
-      { name: "Overhead Press (DB/BB)",     sets: "3×8–10",         tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ ไม่ push forward" },
-      { name: "Incline Dumbbell Press",     sets: "3×10–12",        tip: "เอียง 30° เน้นอกส่วนบน ข้อศอกเปิด 45–75°" },
-      { name: "Lateral Raise",              sets: "3×15",           tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย ไม่ต้องหิ้วน้ำ" },
-      { name: "Cable Chest Fly",            sets: "2×12–15",        tip: "แขนโค้งเล็กน้อย ยืดอกให้สุดทุก rep บีบอกตรงกลาง" },
-      { name: "Tricep Dips / Pushdown",     sets: "3×10–15",        tip: "Dips: ศอกชิดลำตัว ไม่แกว่ง · Pushdown: ศอกล็อค บีบแขนหลังให้สุด" },
+      { name: "Bench Press",                sets: "4×8–10",         tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้าแตะอก แล้วดันขึ้น" },
+      { name: "Lat Pulldown / Pull-up",     sets: "4×8–10",         tip: "ดึงลงมาที่คาง หน้าอกพอง ศอกชี้ลง ไม่โยกตัวช่วย" },
+      { name: "Overhead Press",             sets: "3×10",           tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ" },
+      { name: "Seated Row",                 sets: "3×10–12",        tip: "อกตั้งตรง ดึงศอกมาข้างหลัง squeeze สะบักให้สุด" },
+      { name: "Lateral Raise",              sets: "3×12–15",        tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย น้ำหนักเบาพอคุมฟอร์มได้" },
+      { name: "Triceps Pushdown",           sets: "3×12",           tip: "ศอกล็อคข้างลำตัว บีบแขนหลังให้สุดที่ล่าง" },
     ],
-    tipTitle: "💡 เคล็ดลับ Push Day",
-    tipText: "OHP ย้ายมาก่อน Incline เพราะต้องการไหล่ที่ยังไม่ล้า — Bench + OHP พัก 2–3 นาที · Isolation พัก 60–90 วิ"
+    tipTitle: "💡 เคล็ดลับ Upper A",
+    tipText: "ท่า Compound (Bench, Pulldown, OHP) ทำก่อนท่า Isolation เสมอ · จบเวทแล้วเดินชัน 30–45 นาที"
   },
   {
-    label: "Pull — หลัง · สะบัก · แขนหน้า",
+    label: "Lower A — ขา · น่อง · Core",
     color: "#3B6D11",
     exercises: [
-      { name: "Pull-ups / Lat Pulldown",    sets: "4×6–10",         tip: "Pull-ups: ดึงหน้าอกหาบาร์ · Lat Pulldown: ดึงลงที่คาง หน้าอกพอง ไม่แอ่นหลัง" },
-      { name: "Barbell Bent-over Row",      sets: "3×8–10",         tip: "หลังตรงเอียง 45° เข่างอเล็กน้อย ดึงบาร์มาที่สะดือ squeeze สะบักให้สุด" },
-      { name: "Single-arm DB Row",          sets: "3×10–12",        tip: "วางมือค้ำที่ม้า ดึงศอกขึ้นสูงเลยลำตัว" },
-      { name: "Face Pull + Rear Delt Fly",  sets: "3×15 / 2×15",   tip: "Face Pull: ดึงมาที่ใบหน้า ศอกสูง · Rear Delt Fly: น้ำหนักเบา เน้น squeeze ไหล่หลัง" },
-      { name: "EZ Bar / DB Curl",           sets: "3×10–12",        tip: "ไม่แกว่งลำตัว ศอกล็อคข้างตัว บีบไบเซปที่ top" },
-      { name: "Hammer Curl",                sets: "2×12",           tip: "Neutral grip เน้น Brachialis เพิ่มความหนาแขน" },
+      { name: "Squat",                      sets: "4×8–10",         tip: "เท้ากว้างเท่าไหล่ เข่าตามนิ้วเท้า ลงให้ขาขนานพื้น" },
+      { name: "Romanian Deadlift (RDL)",    sets: "3×10",           tip: "สะโพกถอย หลังตรง รู้สึกตึงหลังขา = ถูกต้อง" },
+      { name: "Leg Press",                  sets: "3×12",           tip: "เท้ากว้างเท่าไหล่ ลงให้เข่า ~90° อย่าล็อคเข่าตอนดันสุด" },
+      { name: "Leg Curl",                   sets: "3×12",           tip: "เน้น Hamstring อย่าสะบัดขาช่วยตอน top" },
+      { name: "Calf Raise",                 sets: "4×15",           tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ" },
+      { name: "Plank",                      sets: "3×45 วิ",        tip: "สะโพกไม่ยกหรือตก เกร็งหน้าท้อง หายใจสม่ำเสมอ" },
     ],
-    tipTitle: "💡 เคล็ดลับ Pull Day",
-    tipText: "Bent-over Row ต้องการ Core มากกว่า Seated Row — 3 ท่าแรกพัก 2–3 นาที · Face Pull + Rear Delt Fly ทำต่อกันได้เลย"
+    tipTitle: "💡 เคล็ดลับ Lower A",
+    tipText: "Squat + RDL คือหัวใจของวัน ฟอร์มมาก่อนน้ำหนัก · เดินชันแค่ 20–25 นาทีพอ ไม่ให้ขาล้าสะสม"
   },
   {
-    label: "Legs — ขา · สะโพก · น่อง · Core",
+    label: "Upper B — อกบน · หลัง · ไหล่ · แขนหน้า",
+    color: "#534AB7",
+    exercises: [
+      { name: "Incline Dumbbell Press",     sets: "4×10",           tip: "เอียง 30° เน้นอกส่วนบน ลดช้า ดันขึ้นบีบอก" },
+      { name: "Barbell Row",                sets: "4×8–10",         tip: "หลังตรงเอียง 45° ดึงบาร์มาที่สะดือ squeeze สะบักให้สุด" },
+      { name: "Dumbbell Shoulder Press",    sets: "3×10",           tip: "หลังพิงพนัก ลดจนศอก 90° ดันขึ้นโดย DB ไม่ชนกัน" },
+      { name: "Face Pull",                  sets: "3×15",           tip: "ดึงเชือกมาที่ใบหน้า ศอกสูง — ท่าสำคัญของไหล่หลังและบุคลิกภาพ" },
+      { name: "Barbell Curl",               sets: "3×12",           tip: "ศอกล็อคข้างตัว ไม่แกว่งลำตัว บีบไบเซปที่ top" },
+      { name: "Dips / Close-grip Push-up",  sets: "3×10–12",        tip: "ศอกชิดลำตัว ลงช้า เน้นแขนหลัง" },
+    ],
+    tipTitle: "💡 เคล็ดลับ Upper B",
+    tipText: "มุมฝึกต่างจาก Upper A (Incline / DB) เพื่อกระตุ้นใยกล้ามใหม่ · Face Pull อย่าข้าม ช่วยไหล่สมดุลกันบาดเจ็บ · จบแล้วเดินชัน 30–45 นาที"
+  },
+  {
+    label: "Lower B — Deadlift · สะโพก · Core",
     color: "#993C1D",
     exercises: [
-      { name: "Barbell Squat",              sets: "4×8–10",         tip: "เท้ากว้างเท่าไหล่ เข่าตามนิ้วเท้า ลงให้ขาขนานพื้น" },
-      { name: "Romanian Deadlift (RDL)",    sets: "3×10–12",        tip: "สะโพกถอย หลังตรง รู้สึกตึงหลังขา = ถูกต้อง" },
-      { name: "Bulgarian Split Squat",      sets: "3×10/ข้าง",      tip: "เท้าหลังวางบนม้า เข่าหน้าตามนิ้วเท้า ลงช้าๆ — เริ่ม Bodyweight ก่อนแล้วค่อยถือ DB" },
-      { name: "Hip Thrust (BB / Machine)",  sets: "3×12–15",        tip: "สะโพกขึ้นจนลำตัวขนานพื้น บีบสะโพกที่ top ค้าง 1 วิ ทุก rep — นี่คือท่าสำคัญที่สุดของวัน" },
-      { name: "Leg Curl (Lying/Seated)",    sets: "3×12–15",        tip: "เน้น Hamstring อย่าสะบัดขาช่วยตอน top" },
-      { name: "Standing Calf Raise",        sets: "3×15–20",        tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ" },
-      { name: "Cable Crunch + Plank",       sets: "3×15 + 2×45วิ",  tip: "Cable Crunch: ก้มจาก core ไม่ใช่คอ · Plank: สะโพกไม่ยกหรือตก หายใจสม่ำเสมอ" },
+      { name: "Deadlift",                   sets: "4×6–8",          tip: "หลังตรงตลอด บาร์ชิดขา ดันพื้นด้วยขา ไม่กระตุกบาร์ขึ้น" },
+      { name: "Bulgarian Split Squat",      sets: "3×10/ข้าง",      tip: "เท้าหลังวางบนม้า เข่าหน้าตามนิ้วเท้า — เริ่ม Bodyweight ก่อนแล้วค่อยถือ DB" },
+      { name: "Hip Thrust",                 sets: "3×12",           tip: "สะโพกขึ้นจนลำตัวขนานพื้น บีบสะโพกที่ top ค้าง 1 วิ ทุก rep" },
+      { name: "Leg Extension",              sets: "3×12",           tip: "บีบต้นขาหน้าที่ top ค้าง 1 วิ ลงช้าๆ" },
+      { name: "Hanging Leg Raise",          sets: "3×12–15",        tip: "ยกขาด้วยหน้าท้อง ไม่แกว่งตัว ลงช้าคุมน้ำหนัก" },
+      { name: "Cable Crunch",               sets: "3×15",           tip: "ก้มจาก core ไม่ใช่ดึงด้วยคอ" },
     ],
-    tipTitle: "💡 เคล็ดลับ Legs Day",
-    tipText: "Bulgarian Split Squat จะหนักกว่าที่คิด ใช้ Bodyweight วันแรก · Hip Thrust: บีบสะโพกค้าง 1 วิที่ top = กุญแจสำคัญ · Squat + RDL พัก 2–3 นาที"
+    tipTitle: "💡 เคล็ดลับ Lower B",
+    tipText: "Deadlift คือท่าหนักสุดของสัปดาห์ วอร์มอัพให้พอ พัก 2–3 นาทีได้เลย · เดินชัน 20–25 นาทีพอ"
   }
 ];
 
@@ -954,7 +1012,7 @@ function toggleDone(dayIdx, exIdx, cb) {
 function renderDetail() {
   const d = days[currentDay];
   let html = `<div class="detail-title" style="color:${d.color};">${d.label}</div>`;
-  html += `<div class="rest-note">⏱ Compound: พัก 2–3 นาที &nbsp;·&nbsp; Isolation: พัก 60–90 วิ</div>`;
+  html += `<div class="rest-note">⏱ พักระหว่างเซ็ต 60–90 วิ &nbsp;·&nbsp; ท่า Compound หนัก (Squat / Deadlift / Bench) พัก 2–3 นาที</div>`;
   d.exercises.forEach((ex, i) => {
     const done = doneState[`${currentDay}-${i}`] || false;
     html += `
