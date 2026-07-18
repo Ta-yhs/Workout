@@ -164,6 +164,14 @@
     .tip-label { font-size: 12px; font-weight: 700; color: var(--teal); margin-bottom: 4px; }
     .tip-text  { font-size: 13px; color: var(--teal); line-height: 1.65; }
     .ex-badge  { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+    .ss-tag {
+      font-size: 9px; font-weight: 700; padding: 2px 7px;
+      border-radius: 99px; margin-left: 6px;
+      vertical-align: middle; white-space: nowrap; display: inline-block;
+    }
+    .ss-1 { background: var(--blue-bg);  color: var(--blue);  }
+    .ss-2 { background: var(--green-bg); color: var(--green); }
+    .ss-3 { background: var(--pur-bg);   color: var(--pur);   }
     .rest-note { font-size: 11px; color: var(--text2); padding: 0 0 10px; border-bottom: 1px solid var(--bdr); margin-bottom: 4px; }
 
     /* ── Nutrition ── */
@@ -408,7 +416,7 @@
       </div>
       <div class="stat-card">
         <div class="stat-label">เวลา/วัน</div>
-        <div class="stat-val" style="font-size:13px;padding-top:3px;">60–90 น.<br><span style="font-size:10px;font-weight:400;color:var(--text2);">รวมคาร์ดิโอ</span></div>
+        <div class="stat-val" style="font-size:13px;padding-top:3px;">~60–75 น.<br><span style="font-size:10px;font-weight:400;color:var(--text2);">รวมคาร์ดิโอ (Superset)</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-label">พัก/เซ็ต</div>
@@ -436,12 +444,13 @@
       <div class="day-card" onclick="selectDay(1)">
         <span class="day-tag pull">อังคาร</span>
         <div class="day-name">Lower A</div>
-        <div class="day-sub">ขา · น่อง · Core</div>
+        <div class="day-sub">ขา · น่อง · Core · Grip</div>
         <div class="chips">
           <span class="chip">Quads</span>
           <span class="chip">Hamstrings</span>
           <span class="chip">Calves</span>
           <span class="chip">Core</span>
+          <span class="chip">Grip</span>
         </div>
       </div>
       <div class="day-card" onclick="selectDay(2)">
@@ -459,12 +468,13 @@
       <div class="day-card" onclick="selectDay(3)">
         <span class="day-tag legs">ศุกร์</span>
         <div class="day-name">Lower B</div>
-        <div class="day-sub">Deadlift · สะโพก · Core</div>
+        <div class="day-sub">Deadlift · สะโพก · Core · Forearms</div>
         <div class="chips">
           <span class="chip">Posterior</span>
           <span class="chip">Glutes</span>
           <span class="chip">Quads</span>
           <span class="chip">Core</span>
+          <span class="chip">Forearms</span>
         </div>
       </div>
     </div>
@@ -942,31 +952,32 @@ const days = [
     color: "#185FA5",
     exercises: [
       { name: "Bench Press",                sets: "4×8–10",         tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้าแตะอก แล้วดันขึ้น" },
-      { name: "Pec Deck",                   sets: "3×12–15",        tip: "หลังพิงพนัก หุบแขนเข้าหากันช้าๆ บีบอกที่จุดสุด อย่าเหวี่ยง" },
       { name: "Lat Pulldown / Pull-up",     sets: "4×8–10",         tip: "ดึงลงมาที่คาง หน้าอกพอง ศอกชี้ลง ไม่โยกตัวช่วย" },
       { name: "Overhead Press",             sets: "3×10",           tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ" },
-      { name: "Seated Row",                 sets: "3×10–12",        tip: "อกตั้งตรง ดึงศอกมาข้างหลัง squeeze สะบักให้สุด" },
-      { name: "Lateral Raise",              sets: "3×12–15",        tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย น้ำหนักเบาพอคุมฟอร์มได้" },
-      { name: "Rear Delt Fly (DB/Machine)", sets: "3×15",           tip: "น้ำหนักเบา กางแขนไปด้านหลัง บีบไหล่หลัง ไม่เหวี่ยงหลังช่วย" },
-      { name: "Triceps Pushdown",           sets: "3×12",           tip: "ศอกล็อคข้างลำตัว บีบแขนหลังให้สุดที่ล่าง" },
-      { name: "Hammer Curl",                sets: "3×12",           tip: "Neutral grip เน้น Brachialis + แขนท่อนล่าง ศอกล็อคข้างตัว ไม่แกว่ง" },
+      { name: "Pec Deck",                   sets: "3×12–15",  ss:1, tip: "หลังพิงพนัก หุบแขนเข้าหากันช้าๆ บีบอกที่จุดสุด อย่าเหวี่ยง" },
+      { name: "Seated Row",                 sets: "3×10–12",  ss:1, tip: "อกตั้งตรง ดึงศอกมาข้างหลัง squeeze สะบักให้สุด" },
+      { name: "Lateral Raise",              sets: "3×12–15",  ss:2, tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย น้ำหนักเบาพอคุมฟอร์มได้" },
+      { name: "Rear Delt Fly (DB/Machine)", sets: "3×15",     ss:2, tip: "น้ำหนักเบา กางแขนไปด้านหลัง บีบไหล่หลัง ไม่เหวี่ยงหลังช่วย" },
+      { name: "Triceps Pushdown",           sets: "3×12",     ss:3, tip: "ศอกล็อคข้างลำตัว บีบแขนหลังให้สุดที่ล่าง" },
+      { name: "Hammer Curl",                sets: "3×12",     ss:3, tip: "Neutral grip เน้น Brachialis + แขนท่อนล่าง ศอกล็อคข้างตัว ไม่แกว่ง" },
     ],
     tipTitle: "💡 เคล็ดลับ Upper A",
-    tipText: "ท่า Compound (Bench, Pulldown, OHP) ทำก่อนท่า Isolation เสมอ · Rear Delt Fly เบาแต่ squeeze ให้สุด · จบเวทแล้วเดินชัน 30–45 นาที"
+    tipText: "Compound 3 ท่าแรกทำเดี่ยว พัก 2–3 นาที · ที่เหลือ Superset 3 คู่ ประหยัดเวลา ~15 นาที · จบเวทแล้วเดินชัน 30–45 นาที"
   },
   {
-    label: "Lower A — ขา · น่อง · Core",
+    label: "Lower A — ขา · น่อง · Core · Grip",
     color: "#3B6D11",
     exercises: [
       { name: "Squat",                      sets: "4×8–10",         tip: "เท้ากว้างเท่าไหล่ เข่าตามนิ้วเท้า ลงให้ขาขนานพื้น" },
       { name: "Romanian Deadlift (RDL)",    sets: "3×10",           tip: "สะโพกถอย หลังตรง รู้สึกตึงหลังขา = ถูกต้อง" },
-      { name: "Leg Press",                  sets: "3×12",           tip: "เท้ากว้างเท่าไหล่ ลงให้เข่า ~90° อย่าล็อคเข่าตอนดันสุด" },
-      { name: "Leg Curl",                   sets: "3×12",           tip: "เน้น Hamstring อย่าสะบัดขาช่วยตอน top" },
-      { name: "Calf Raise",                 sets: "4×15",           tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ" },
-      { name: "Plank",                      sets: "3×45 วิ",        tip: "สะโพกไม่ยกหรือตก เกร็งหน้าท้อง หายใจสม่ำเสมอ" },
+      { name: "Leg Press",                  sets: "3×12",     ss:1, tip: "เท้ากว้างเท่าไหล่ ลงให้เข่า ~90° อย่าล็อคเข่าตอนดันสุด" },
+      { name: "Leg Curl",                   sets: "3×12",     ss:1, tip: "เน้น Hamstring อย่าสะบัดขาช่วยตอน top" },
+      { name: "Calf Raise",                 sets: "4×15",     ss:2, tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ" },
+      { name: "Plank",                      sets: "3×45 วิ",  ss:2, tip: "สะโพกไม่ยกหรือตก เกร็งหน้าท้อง หายใจสม่ำเสมอ" },
+      { name: "Farmer's Carry",             sets: "3×30–40 ม.",     tip: "ถือ DB หนักสุดที่คุมได้ เดินตัวตรง อกพอง ไหล่ไม่ห่อ — grip + traps + core ในท่าเดียว" },
     ],
     tipTitle: "💡 เคล็ดลับ Lower A",
-    tipText: "Squat + RDL คือหัวใจของวัน ฟอร์มมาก่อนน้ำหนัก · เดินชันแค่ 20–25 นาทีพอ ไม่ให้ขาล้าสะสม"
+    tipText: "Squat + RDL คือหัวใจของวัน ฟอร์มมาก่อนน้ำหนัก · Leg Press + Leg Curl ถ้าเหนื่อยเกินแยกทำทีละท่าได้ · เดินชันแค่ 20–25 นาทีพอ"
   },
   {
     label: "Upper B — อกบน · หลัง · แขน · Forearms",
@@ -974,28 +985,29 @@ const days = [
     exercises: [
       { name: "Incline Dumbbell Press",     sets: "4×10",           tip: "เอียง 30° เน้นอกส่วนบน ลดช้า ดันขึ้นบีบอก" },
       { name: "Barbell Row",                sets: "4×8–10",         tip: "หลังตรงเอียง 45° ดึงบาร์มาที่สะดือ squeeze สะบักให้สุด" },
-      { name: "Dumbbell Shoulder Press",    sets: "3×10",           tip: "หลังพิงพนัก ลดจนศอก 90° ดันขึ้นโดย DB ไม่ชนกัน" },
-      { name: "Face Pull",                  sets: "3×15",           tip: "ดึงเชือกมาที่ใบหน้า ศอกสูง — ท่าสำคัญของไหล่หลังและบุคลิกภาพ" },
-      { name: "Barbell Curl",               sets: "3×12",           tip: "ศอกล็อคข้างตัว ไม่แกว่งลำตัว บีบไบเซปที่ top" },
-      { name: "Dips / Close-grip Push-up",  sets: "3×10–12",        tip: "ศอกชิดลำตัว ลงช้า เน้นแขนหลัง" },
+      { name: "Dumbbell Shoulder Press",    sets: "3×10",     ss:1, tip: "หลังพิงพนัก ลดจนศอก 90° ดันขึ้นโดย DB ไม่ชนกัน" },
+      { name: "Face Pull",                  sets: "3×15",     ss:1, tip: "ดึงเชือกมาที่ใบหน้า ศอกสูง — ท่าสำคัญของไหล่หลังและบุคลิกภาพ" },
+      { name: "Barbell Curl",               sets: "3×12",     ss:2, tip: "ศอกล็อคข้างตัว ไม่แกว่งลำตัว บีบไบเซปที่ top" },
+      { name: "Dips / Close-grip Push-up",  sets: "3×10–12",  ss:2, tip: "ศอกชิดลำตัว ลงช้า เน้นแขนหลัง" },
       { name: "Wrist Curl (BB/DB)",         sets: "3×15–20",        tip: "วางแขนบนม้า ม้วนข้อมือขึ้นช้าๆ · สลับคว่ำมือ (Reverse) เน้นหลังแขนท่อนล่าง" },
     ],
     tipTitle: "💡 เคล็ดลับ Upper B",
-    tipText: "มุมฝึกต่างจาก Upper A (Incline / DB) เพื่อกระตุ้นใยกล้ามใหม่ · Face Pull อย่าข้าม ช่วยไหล่สมดุลกันบาดเจ็บ · Wrist Curl ไว้ท้ายสุดเสมอ ไม่งั้น grip ล้ากระทบท่าอื่น · จบแล้วเดินชัน 30–45 นาที"
+    tipText: "มุมฝึกต่างจาก Upper A กระตุ้นใยกล้ามใหม่ · Superset 2 คู่ ประหยัดเวลา ~10 นาที · Wrist Curl ไว้ท้ายสุดเสมอ ไม่งั้น grip ล้ากระทบท่าอื่น · จบแล้วเดินชัน 30–45 นาที"
   },
   {
-    label: "Lower B — Deadlift · สะโพก · Core",
+    label: "Lower B — Deadlift · สะโพก · Core · Forearms",
     color: "#993C1D",
     exercises: [
       { name: "Deadlift",                   sets: "4×6–8",          tip: "หลังตรงตลอด บาร์ชิดขา ดันพื้นด้วยขา ไม่กระตุกบาร์ขึ้น" },
       { name: "Bulgarian Split Squat",      sets: "3×10/ข้าง",      tip: "เท้าหลังวางบนม้า เข่าหน้าตามนิ้วเท้า — เริ่ม Bodyweight ก่อนแล้วค่อยถือ DB" },
       { name: "Hip Thrust",                 sets: "3×12",           tip: "สะโพกขึ้นจนลำตัวขนานพื้น บีบสะโพกที่ top ค้าง 1 วิ ทุก rep" },
       { name: "Leg Extension",              sets: "3×12",           tip: "บีบต้นขาหน้าที่ top ค้าง 1 วิ ลงช้าๆ" },
-      { name: "Hanging Leg Raise",          sets: "3×12–15",        tip: "ยกขาด้วยหน้าท้อง ไม่แกว่งตัว ลงช้าคุมน้ำหนัก" },
-      { name: "Cable Crunch",               sets: "3×15",           tip: "ก้มจาก core ไม่ใช่ดึงด้วยคอ" },
+      { name: "Hanging Leg Raise",          sets: "3×12–15",  ss:1, tip: "ยกขาด้วยหน้าท้อง ไม่แกว่งตัว ลงช้าคุมน้ำหนัก" },
+      { name: "Cable Crunch",               sets: "3×15",     ss:1, tip: "ก้มจาก core ไม่ใช่ดึงด้วยคอ" },
+      { name: "Reverse Wrist Curl",         sets: "2×15",           tip: "คว่ำมือจับบาร์เบา ม้วนข้อมือขึ้น — Deadlift เผา grip ฝั่งกำไปแล้ว ฝึกฝั่งตรงข้ามให้สมดุล กันปวดข้อศอก" },
     ],
     tipTitle: "💡 เคล็ดลับ Lower B",
-    tipText: "Deadlift คือท่าหนักสุดของสัปดาห์ วอร์มอัพให้พอ พัก 2–3 นาทีได้เลย · เดินชัน 20–25 นาทีพอ"
+    tipText: "Deadlift คือท่าหนักสุดของสัปดาห์ วอร์มอัพให้พอ พัก 2–3 นาทีได้เลย · Core จับคู่ Superset จบท้าย · เดินชัน 20–25 นาทีพอ"
   }
 ];
 
@@ -1018,14 +1030,14 @@ function toggleDone(dayIdx, exIdx, cb) {
 function renderDetail() {
   const d = days[currentDay];
   let html = `<div class="detail-title" style="color:${d.color};">${d.label}</div>`;
-  html += `<div class="rest-note">⏱ พักระหว่างเซ็ต 60–90 วิ &nbsp;·&nbsp; ท่า Compound หนัก (Squat / Deadlift / Bench) พัก 2–3 นาที</div>`;
+  html += `<div class="rest-note">⏱ พักระหว่างเซ็ต 60–90 วิ &nbsp;·&nbsp; ท่า Compound หนัก (Squat / Deadlift / Bench) พัก 2–3 นาที<br>⚡ SS = Superset: ทำ 2 ท่าสีเดียวกันติดกันไม่พัก จบคู่แล้วค่อยพัก 60–90 วิ</div>`;
   d.exercises.forEach((ex, i) => {
     const done = doneState[`${currentDay}-${i}`] || false;
     html += `
       <div class="ex-row${done ? ' done' : ''}" id="exrow-${currentDay}-${i}">
         <input type="checkbox" class="ex-check"${done ? ' checked' : ''} onchange="toggleDone(${currentDay},${i},this)">
         <div>
-          <div class="ex-name">${ex.name}</div>
+          <div class="ex-name">${ex.name}${ex.ss ? `<span class="ss-tag ss-${ex.ss}">⚡SS${ex.ss}</span>` : ''}</div>
           <div class="ex-tip">${ex.tip}</div>
         </div>
         <div class="ex-sets">${ex.sets}</div>
