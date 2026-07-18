@@ -424,12 +424,13 @@
       <div class="day-card active" onclick="selectDay(0)">
         <span class="day-tag push">จันทร์</span>
         <div class="day-name">Upper A</div>
-        <div class="day-sub">อก · หลัง · ไหล่ · แขนหลัง</div>
+        <div class="day-sub">อก · หลัง · ไหล่ · แขน</div>
         <div class="chips">
           <span class="chip">Chest</span>
           <span class="chip">Back</span>
           <span class="chip">Shoulders</span>
-          <span class="chip">Triceps</span>
+          <span class="chip">Rear Delt</span>
+          <span class="chip">Arms</span>
         </div>
       </div>
       <div class="day-card" onclick="selectDay(1)">
@@ -446,12 +447,13 @@
       <div class="day-card" onclick="selectDay(2)">
         <span class="day-tag upb">พฤหัส</span>
         <div class="day-name">Upper B</div>
-        <div class="day-sub">อกบน · หลัง · ไหล่ · แขนหน้า</div>
+        <div class="day-sub">อกบน · หลัง · แขน · Forearms</div>
         <div class="chips">
           <span class="chip">Chest</span>
           <span class="chip">Back</span>
           <span class="chip">Rear Delt</span>
           <span class="chip">Biceps</span>
+          <span class="chip">Forearms</span>
         </div>
       </div>
       <div class="day-card" onclick="selectDay(3)">
@@ -936,7 +938,7 @@ function switchTab(name) {
 
 const days = [
   {
-    label: "Upper A — อก · หลัง · ไหล่ · แขนหลัง",
+    label: "Upper A — อก · หลัง · ไหล่ · แขน",
     color: "#185FA5",
     exercises: [
       { name: "Bench Press",                sets: "4×8–10",         tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้าแตะอก แล้วดันขึ้น" },
@@ -945,10 +947,12 @@ const days = [
       { name: "Overhead Press",             sets: "3×10",           tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ" },
       { name: "Seated Row",                 sets: "3×10–12",        tip: "อกตั้งตรง ดึงศอกมาข้างหลัง squeeze สะบักให้สุด" },
       { name: "Lateral Raise",              sets: "3×12–15",        tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย น้ำหนักเบาพอคุมฟอร์มได้" },
+      { name: "Rear Delt Fly (DB/Machine)", sets: "3×15",           tip: "น้ำหนักเบา กางแขนไปด้านหลัง บีบไหล่หลัง ไม่เหวี่ยงหลังช่วย" },
       { name: "Triceps Pushdown",           sets: "3×12",           tip: "ศอกล็อคข้างลำตัว บีบแขนหลังให้สุดที่ล่าง" },
+      { name: "Hammer Curl",                sets: "3×12",           tip: "Neutral grip เน้น Brachialis + แขนท่อนล่าง ศอกล็อคข้างตัว ไม่แกว่ง" },
     ],
     tipTitle: "💡 เคล็ดลับ Upper A",
-    tipText: "ท่า Compound (Bench, Pulldown, OHP) ทำก่อนท่า Isolation เสมอ · จบเวทแล้วเดินชัน 30–45 นาที"
+    tipText: "ท่า Compound (Bench, Pulldown, OHP) ทำก่อนท่า Isolation เสมอ · Rear Delt Fly เบาแต่ squeeze ให้สุด · จบเวทแล้วเดินชัน 30–45 นาที"
   },
   {
     label: "Lower A — ขา · น่อง · Core",
@@ -965,7 +969,7 @@ const days = [
     tipText: "Squat + RDL คือหัวใจของวัน ฟอร์มมาก่อนน้ำหนัก · เดินชันแค่ 20–25 นาทีพอ ไม่ให้ขาล้าสะสม"
   },
   {
-    label: "Upper B — อกบน · หลัง · ไหล่ · แขนหน้า",
+    label: "Upper B — อกบน · หลัง · แขน · Forearms",
     color: "#534AB7",
     exercises: [
       { name: "Incline Dumbbell Press",     sets: "4×10",           tip: "เอียง 30° เน้นอกส่วนบน ลดช้า ดันขึ้นบีบอก" },
@@ -974,9 +978,10 @@ const days = [
       { name: "Face Pull",                  sets: "3×15",           tip: "ดึงเชือกมาที่ใบหน้า ศอกสูง — ท่าสำคัญของไหล่หลังและบุคลิกภาพ" },
       { name: "Barbell Curl",               sets: "3×12",           tip: "ศอกล็อคข้างตัว ไม่แกว่งลำตัว บีบไบเซปที่ top" },
       { name: "Dips / Close-grip Push-up",  sets: "3×10–12",        tip: "ศอกชิดลำตัว ลงช้า เน้นแขนหลัง" },
+      { name: "Wrist Curl (BB/DB)",         sets: "3×15–20",        tip: "วางแขนบนม้า ม้วนข้อมือขึ้นช้าๆ · สลับคว่ำมือ (Reverse) เน้นหลังแขนท่อนล่าง" },
     ],
     tipTitle: "💡 เคล็ดลับ Upper B",
-    tipText: "มุมฝึกต่างจาก Upper A (Incline / DB) เพื่อกระตุ้นใยกล้ามใหม่ · Face Pull อย่าข้าม ช่วยไหล่สมดุลกันบาดเจ็บ · จบแล้วเดินชัน 30–45 นาที"
+    tipText: "มุมฝึกต่างจาก Upper A (Incline / DB) เพื่อกระตุ้นใยกล้ามใหม่ · Face Pull อย่าข้าม ช่วยไหล่สมดุลกันบาดเจ็บ · Wrist Curl ไว้ท้ายสุดเสมอ ไม่งั้น grip ล้ากระทบท่าอื่น · จบแล้วเดินชัน 30–45 นาที"
   },
   {
     label: "Lower B — Deadlift · สะโพก · Core",
