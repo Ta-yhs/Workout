@@ -456,10 +456,11 @@
       <div class="day-card" onclick="selectDay(2)">
         <span class="day-tag upb">พฤหัส</span>
         <div class="day-name">Upper B</div>
-        <div class="day-sub">อกบน · หลัง · แขน · Forearms</div>
+        <div class="day-sub">อกบน · หลัง · ไหล่ · แขน</div>
         <div class="chips">
           <span class="chip">Chest</span>
           <span class="chip">Back</span>
+          <span class="chip">Side Delt</span>
           <span class="chip">Rear Delt</span>
           <span class="chip">Biceps</span>
           <span class="chip">Forearms</span>
@@ -468,11 +469,12 @@
       <div class="day-card" onclick="selectDay(3)">
         <span class="day-tag legs">ศุกร์</span>
         <div class="day-name">Lower B</div>
-        <div class="day-sub">Deadlift · สะโพก · Core · Forearms</div>
+        <div class="day-sub">Deadlift · สะโพก · น่อง · Core</div>
         <div class="chips">
           <span class="chip">Posterior</span>
           <span class="chip">Glutes</span>
           <span class="chip">Quads</span>
+          <span class="chip">Calves</span>
           <span class="chip">Core</span>
           <span class="chip">Forearms</span>
         </div>
@@ -510,7 +512,17 @@
 
     <div class="note-box" style="margin-top:14px;">
       <p><b>⚠️ คาร์ดิโอทำหลังเวทเสมอ</b> ไม่ทำก่อน เพื่อไม่ให้แรงยกตก · วันขาลดเวลาคาร์ดิโอลง ไม่ให้ขาล้าสะสมจนกระทบฟอร์ม</p>
-      <p>เดินชันเผาเพิ่ม <b>~250–400 kcal/ครั้ง</b> — ต้องกินโปรตีน+แคลอรี่ให้พอ ไม่งั้นเสี่ยงกล้ามลีบแทนที่จะโต</p>
+      <p>เดินชันคุม <b>Zone 2 (120–140 bpm)</b> หอบนิดๆ แต่ยังพูดเป็นประโยคได้ — เผาเพิ่ม <b>~250–400 kcal/ครั้ง</b> ต้องกินโปรตีน+แคลอรี่ให้พอ · HIIT สูงสุด 1 ครั้ง/สัปดาห์ (พุธ ใช้จักรยาน 6–8 × 30 วิหนัก/90 วิเบา) ขาล้าเมื่อไหร่ตัด HIIT ทิ้งก่อน</p>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-label">🔥 Warm-up ก่อนเวท 8–10 นาที — ห้ามข้ามก่อน Squat / Deadlift / Bench</div>
+      <div class="tip-text">คาร์ดิโอเบา 3–5 นาที → dynamic stretch จุดที่จะใช้ (leg swings, arm circles, hip opener) → เซ็ตวอร์มท่าแรก: บาร์เปล่า×10 → 50%×6 → 70%×3 → เริ่มเซ็ตจริง</div>
+    </div>
+
+    <div class="note-box" style="margin-top:14px;">
+      <p><b>📅 Deload สัปดาห์ที่ 7–8:</b> 1 สัปดาห์ — น้ำหนักเดิม ลดเซ็ตลงครึ่งหนึ่ง หยุดที่ RIR 4–5 คาร์ดิโอเบาคงไว้ · ทำเมื่อเจอ 2 ใน 3: reps ค้าง 2 สัปดาห์ติด / นอนแย่ไม่อยากเข้ายิม / ข้อต่อระบม</p>
+      <p><b>📓 จดทุกเซ็ต</b> (น้ำหนัก × reps × RIR) + ชั่งน้ำหนักตอนตื่น 3–4 วัน/สัปดาห์ + วัดรอบเอวทุก 2 สัปดาห์ + ถ่ายรูปทุก 4 สัปดาห์ — ไม่จด = ไม่มี progressive overload จริง</p>
     </div>
 
   </div>
@@ -524,10 +536,10 @@
     <div class="kcal-banner">
       <div>
         <div class="kcal-lbl">เป้าหมายแคลอรี่/วัน</div>
-        <div class="kcal-sub">สำหรับ Body Recomp + หุ่นนักกีฬา</div>
+        <div class="kcal-sub">Recomp — deficit เบา ~250–350 จาก TDEE ~2,700</div>
       </div>
       <div style="text-align:right;">
-        <div class="kcal-val">2,400</div>
+        <div class="kcal-val" style="font-size:22px;">2,350–2,400</div>
         <div class="kcal-unit">kcal / วัน</div>
       </div>
     </div>
@@ -535,23 +547,29 @@
     <!-- Macros -->
     <div class="macro-row">
       <div class="macro-card mp">
-        <div class="macro-val">145<span class="macro-unit">g</span></div>
-        <div class="macro-lbl">โปรตีน</div>
+        <div class="macro-val">160<span class="macro-unit">g</span></div>
+        <div class="macro-lbl">โปรตีน (2.2 g/kg)</div>
       </div>
       <div class="macro-card mc">
-        <div class="macro-val">240<span class="macro-unit">g</span></div>
+        <div class="macro-val">265<span class="macro-unit">g</span></div>
         <div class="macro-lbl">คาร์บ</div>
       </div>
       <div class="macro-card mf">
-        <div class="macro-val">70<span class="macro-unit">g</span></div>
+        <div class="macro-val">72<span class="macro-unit">g</span></div>
         <div class="macro-lbl">ไขมัน</div>
       </div>
     </div>
 
     <!-- Rice as main carb source -->
     <div class="tip-box" style="margin-bottom:14px;margin-top:0;">
-      <div class="tip-label">ข้าวสวย = แหล่งพลังงานหลัก</div>
-      <div class="tip-text">ข้าวสวย 100 g ให้คาร์บ 28 g และพลังงาน 130 kcal — ทุกมื้อหลักมีข้าว 100–150 g ทำให้ได้ ~2,100 kcal/วัน เพียงพอสำหรับออกกำลังกายและกล้ามเนื้อไม่สลาย</div>
+      <div class="tip-label">ข้าวสวย = แหล่งพลังงานหลัก · เทคาร์บรอบการฝึก</div>
+      <div class="tip-text">ข้าวสวย 100 g ให้คาร์บ 28 g / 130 kcal — Pre-workout 1–2 ชม. กินข้าว/กล้วย · มื้อหลังฝึกใส่ข้าวเยอะสุดของวัน · วันพักลดข้าวลงเล็กน้อยได้ตามหิว</div>
+    </div>
+
+    <!-- Creatine -->
+    <div class="tip-box" style="margin-bottom:14px;margin-top:0;">
+      <div class="tip-label">💊 Creatine Monohydrate 3–5 g ทุกวัน (วันพักด้วย)</div>
+      <div class="tip-text">อาหารเสริมที่หลักฐานแน่นที่สุด — แรง +5–10% กล้ามโตไวขึ้น · เวลาไหนก็ได้ ไม่ต้อง loading · ช่วงแรกน้ำหนักขึ้น ~0.5–1 kg จากน้ำในกล้าม ไม่ใช่ไขมัน อย่าตกใจ · ดื่มน้ำ ~3 ลิตร/วัน</div>
     </div>
 
     <!-- Food table -->
@@ -686,7 +704,8 @@
         </div>
       </div>
       <div class="dt-note">
-        เพิ่มข้าว 1 ทัพพีต่อมื้อเพื่อให้ครบ <b>~2,400 kcal</b> — กด 🔀 เพื่อดูเมนูใหม่
+        เมนูสุ่มให้ ~1,900–2,200 kcal — เติมข้าวอีก ~1 ทัพพี/มื้อ + โปรตีนอีก ~1 ฝ่ามือ/วัน ให้ถึง <b>2,350–2,400 kcal · โปรตีน 160 g</b> จริงทุกวัน<br>
+        โปรตีนกระจาย <b>4 มื้อ × 35–40 g</b> มื้อเช้าให้ถึง 30 g+ เสมอ · หลังเวทกินโปรตีน 30–40 g ภายใน ~2 ชม. · กด 🔀 สุ่มเมนูใหม่
       </div>
     </div>
 
@@ -855,10 +874,10 @@ const mealPools = {
   breakfast: [
     { items:["โยเกิร์ตกรีก 200 g","นม 1 แก้ว (250 ml)","ข้าวสวย 100 g","ผักต้ม 100 g"],       prot:33, carb:52, kcal:425 },
     { items:["โยเกิร์ตกรีก 200 g","นม 1 แก้ว (250 ml)","กล้วย 2 ลูก"],                        prot:31, carb:73, kcal:484 },
-    { items:["โยเกิร์ตกรีก 150 g","นม 1 แก้ว (250 ml)","ข้าวสวย 100 g","กล้วย 1 ลูก"],       prot:27, carb:72, kcal:477 },
-    { items:["นม 1 แก้ว (250 ml)","ข้าวสวย 150 g","กล้วย 1 ลูก","ผักสด 100 g"],              prot:15, carb:86, kcal:479 },
-    { items:["โยเกิร์ตกรีก 200 g","กล้วย 2 ลูก","ข้าวสวย 100 g"],                            prot:25, carb:89, kcal:462 },
-    { items:["นม 2 แก้ว (500 ml)","โยเกิร์ตกรีก 100 g","กล้วย 1 ลูก"],                       prot:27, carb:55, kcal:470 },
+    { items:["โยเกิร์ตกรีก 200 g","นม 1 แก้ว (250 ml)","ข้าวสวย 100 g","กล้วย 1 ลูก"],       prot:32, carb:74, kcal:506 },
+    { items:["นม 1 แก้ว (250 ml)","โยเกิร์ตกรีก 150 g","ข้าวสวย 150 g","กล้วย 1 ลูก"],       prot:30, carb:91, kcal:554 },
+    { items:["โยเกิร์ตกรีก 200 g","นม 1 แก้ว (250 ml)","กล้วย 2 ลูก","ข้าวสวย 100 g"],       prot:33, carb:101, kcal:614 },
+    { items:["นม 2 แก้ว (500 ml)","โยเกิร์ตกรีก 150 g","กล้วย 1 ลูก"],                       prot:32, carb:58, kcal:499 },
   ],
   lunch: [
     { items:["ไก่อก 200 g (ต้ม / ย่าง)","ข้าวสวย 150 g","ผักรวม 200 g"],                     prot:70, carb:52, kcal:575 },
@@ -951,9 +970,9 @@ const days = [
     label: "Upper A — อก · หลัง · ไหล่ · แขน",
     color: "#185FA5",
     exercises: [
-      { name: "Bench Press",                sets: "4×8–10",         tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้าแตะอก แล้วดันขึ้น" },
-      { name: "Lat Pulldown / Pull-up",     sets: "4×8–10",         tip: "ดึงลงมาที่คาง หน้าอกพอง ศอกชี้ลง ไม่โยกตัวช่วย" },
-      { name: "Overhead Press",             sets: "3×10",           tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ" },
+      { name: "Bench Press",                sets: "4×8–10",         tip: "หลังโค้งเล็กน้อย สะบักหนีบ ลดบาร์ช้าแตะอก แล้วดันขึ้น · RIR 1–3" },
+      { name: "Lat Pulldown / Pull-up",     sets: "4×8–10",         tip: "ดึงลงมาที่คาง หน้าอกพอง ศอกชี้ลง ไม่โยกตัวช่วย · RIR 1–2" },
+      { name: "Overhead Press",             sets: "3×8–10",         tip: "แกนกลางแน่น อย่าแอ่นหลัง ดันตรงเหนือศีรษะ · RIR 1–2" },
       { name: "Pec Deck",                   sets: "3×12–15",  ss:1, tip: "หลังพิงพนัก หุบแขนเข้าหากันช้าๆ บีบอกที่จุดสุด อย่าเหวี่ยง" },
       { name: "Seated Row",                 sets: "3×10–12",  ss:1, tip: "อกตั้งตรง ดึงศอกมาข้างหลัง squeeze สะบักให้สุด" },
       { name: "Lateral Raise",              sets: "3×12–15",  ss:2, tip: "ยกถึงระดับไหล่ ศอกนำมือเล็กน้อย น้ำหนักเบาพอคุมฟอร์มได้" },
@@ -962,52 +981,54 @@ const days = [
       { name: "Hammer Curl",                sets: "3×12",     ss:3, tip: "Neutral grip เน้น Brachialis + แขนท่อนล่าง ศอกล็อคข้างตัว ไม่แกว่ง" },
     ],
     tipTitle: "💡 เคล็ดลับ Upper A",
-    tipText: "Compound 3 ท่าแรกทำเดี่ยว พัก 2–3 นาที · ที่เหลือ Superset 3 คู่ ประหยัดเวลา ~15 นาที · จบเวทแล้วเดินชัน 30–45 นาที"
+    tipText: "Compound 3 ท่าแรกทำเดี่ยว พัก 2–3 นาที · Superset 3 คู่ ประหยัด ~15 นาที · Isolation ท้าย session เล่นถึง RIR 0–1 ได้ · เดินชัน 30–45 นาที Zone 2 (120–140 bpm)"
   },
   {
     label: "Lower A — ขา · น่อง · Core · Grip",
     color: "#3B6D11",
     exercises: [
-      { name: "Squat",                      sets: "4×8–10",         tip: "เท้ากว้างเท่าไหล่ เข่าตามนิ้วเท้า ลงให้ขาขนานพื้น" },
-      { name: "Romanian Deadlift (RDL)",    sets: "3×10",           tip: "สะโพกถอย หลังตรง รู้สึกตึงหลังขา = ถูกต้อง" },
+      { name: "Squat",                      sets: "4×8–10",         tip: "เท้ากว้างเท่าไหล่ เข่าตามนิ้วเท้า ลงให้ขาขนานพื้น · RIR 1–2 ห้ามถึง failure" },
+      { name: "Romanian Deadlift (RDL)",    sets: "3×8–10",         tip: "สะโพกถอย หลังตรง รู้สึกตึงหลังขา = ถูกต้อง · RIR 2" },
       { name: "Leg Press",                  sets: "3×12",     ss:1, tip: "เท้ากว้างเท่าไหล่ ลงให้เข่า ~90° อย่าล็อคเข่าตอนดันสุด" },
       { name: "Leg Curl",                   sets: "3×12",     ss:1, tip: "เน้น Hamstring อย่าสะบัดขาช่วยตอน top" },
-      { name: "Calf Raise",                 sets: "4×15",     ss:2, tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ" },
-      { name: "Plank",                      sets: "3×45 วิ",  ss:2, tip: "สะโพกไม่ยกหรือตก เกร็งหน้าท้อง หายใจสม่ำเสมอ" },
+      { name: "Calf Raise",                 sets: "4×12–15",  ss:2, tip: "ยืดน่องลงสุดทุก rep ขึ้นสูงสุด ทำช้าๆ" },
+      { name: "Plank",                      sets: "3×45–60 วิ", ss:2, tip: "สะโพกไม่ยกหรือตก เกร็งหน้าท้อง — ค้าง 60 วิสบายๆ เมื่อไหร่ เปลี่ยนเป็น Weighted Plank / Ab Wheel" },
       { name: "Farmer's Carry",             sets: "3×30–40 ม.",     tip: "ถือ DB หนักสุดที่คุมได้ เดินตัวตรง อกพอง ไหล่ไม่ห่อ — grip + traps + core ในท่าเดียว" },
     ],
     tipTitle: "💡 เคล็ดลับ Lower A",
-    tipText: "Squat + RDL คือหัวใจของวัน ฟอร์มมาก่อนน้ำหนัก · Leg Press + Leg Curl ถ้าเหนื่อยเกินแยกทำทีละท่าได้ · เดินชันแค่ 20–25 นาทีพอ"
+    tipText: "Squat + RDL คือหัวใจของวัน ฟอร์มมาก่อนน้ำหนัก · Leg Press + Leg Curl ถ้าเหนื่อยเกินแยกทำทีละท่าได้ · เดินชัน 20–25 นาที Zone 2"
   },
   {
-    label: "Upper B — อกบน · หลัง · แขน · Forearms",
+    label: "Upper B — อกบน · หลัง · ไหล่ · แขน",
     color: "#534AB7",
     exercises: [
-      { name: "Incline Dumbbell Press",     sets: "4×10",           tip: "เอียง 30° เน้นอกส่วนบน ลดช้า ดันขึ้นบีบอก" },
-      { name: "Barbell Row",                sets: "4×8–10",         tip: "หลังตรงเอียง 45° ดึงบาร์มาที่สะดือ squeeze สะบักให้สุด" },
+      { name: "Incline Dumbbell Press",     sets: "4×8–10",         tip: "เอียง 30° เน้นอกส่วนบน ลดช้า ดันขึ้นบีบอก · RIR 1–2" },
+      { name: "Barbell Row",                sets: "4×8–10",         tip: "หลังตรงเอียง 45° ดึงบาร์มาที่สะดือ squeeze สะบัก · RIR 2 — สัปดาห์ไหนหลังล่างล้า ใช้ Chest-Supported Row แทน" },
       { name: "Dumbbell Shoulder Press",    sets: "3×10",     ss:1, tip: "หลังพิงพนัก ลดจนศอก 90° ดันขึ้นโดย DB ไม่ชนกัน" },
       { name: "Face Pull",                  sets: "3×15",     ss:1, tip: "ดึงเชือกมาที่ใบหน้า ศอกสูง — ท่าสำคัญของไหล่หลังและบุคลิกภาพ" },
+      { name: "Cable / DB Lateral Raise",   sets: "3×12–15",  ss:2, tip: "เพิ่มมาเพื่อไหล่กว้าง V-taper — cable ให้แรงต้านสม่ำเสมอตลอดช่วง ยกช้าคุมฟอร์ม" },
       { name: "Barbell Curl",               sets: "3×12",     ss:2, tip: "ศอกล็อคข้างตัว ไม่แกว่งลำตัว บีบไบเซปที่ top" },
-      { name: "Dips / Close-grip Push-up",  sets: "3×10–12",  ss:2, tip: "ศอกชิดลำตัว ลงช้า เน้นแขนหลัง" },
-      { name: "Wrist Curl (BB/DB)",         sets: "3×15–20",        tip: "วางแขนบนม้า ม้วนข้อมือขึ้นช้าๆ · สลับคว่ำมือ (Reverse) เน้นหลังแขนท่อนล่าง" },
+      { name: "Dips / Close-grip Push-up",  sets: "3×10–12",  ss:3, tip: "ศอกชิดลำตัว ลงช้า เน้นแขนหลัง — ทำได้เกิน 12 rep เมื่อไหร่ ให้ถ่วงน้ำหนัก" },
+      { name: "Wrist Curl (BB/DB)",         sets: "2×15–20",  ss:3, tip: "วางแขนบนม้า ม้วนข้อมือขึ้นช้าๆ ใกล้ failure — 2 เซ็ตพอเมื่อรวม Farmer's + งานดึงทั้งหมด" },
     ],
     tipTitle: "💡 เคล็ดลับ Upper B",
-    tipText: "มุมฝึกต่างจาก Upper A กระตุ้นใยกล้ามใหม่ · Superset 2 คู่ ประหยัดเวลา ~10 นาที · Wrist Curl ไว้ท้ายสุดเสมอ ไม่งั้น grip ล้ากระทบท่าอื่น · จบแล้วเดินชัน 30–45 นาที"
+    tipText: "Side Delt ตอนนี้ 6 เซ็ต/สัปดาห์ ครบเกณฑ์เพื่อไหล่กว้าง · Wrist Curl ไว้ท้ายสุดเสมอ ไม่งั้น grip ล้ากระทบท่าอื่น · จบแล้วเดินชัน 30–45 นาที Zone 2"
   },
   {
-    label: "Lower B — Deadlift · สะโพก · Core · Forearms",
+    label: "Lower B — Deadlift · สะโพก · น่อง · Core",
     color: "#993C1D",
     exercises: [
-      { name: "Deadlift",                   sets: "4×6–8",          tip: "หลังตรงตลอด บาร์ชิดขา ดันพื้นด้วยขา ไม่กระตุกบาร์ขึ้น" },
+      { name: "Deadlift",                   sets: "3×5–6",          tip: "หลังตรงตลอด บาร์ชิดขา ดันพื้นด้วยขา · วอร์มไล่น้ำหนัก 2–3 เซ็ตก่อนเสมอ · RIR 1–2 ห้ามถึง failure" },
       { name: "Bulgarian Split Squat",      sets: "3×10/ข้าง",      tip: "เท้าหลังวางบนม้า เข่าหน้าตามนิ้วเท้า — เริ่ม Bodyweight ก่อนแล้วค่อยถือ DB" },
-      { name: "Hip Thrust",                 sets: "3×12",           tip: "สะโพกขึ้นจนลำตัวขนานพื้น บีบสะโพกที่ top ค้าง 1 วิ ทุก rep" },
-      { name: "Leg Extension",              sets: "3×12",           tip: "บีบต้นขาหน้าที่ top ค้าง 1 วิ ลงช้าๆ" },
-      { name: "Hanging Leg Raise",          sets: "3×12–15",  ss:1, tip: "ยกขาด้วยหน้าท้อง ไม่แกว่งตัว ลงช้าคุมน้ำหนัก" },
-      { name: "Cable Crunch",               sets: "3×15",     ss:1, tip: "ก้มจาก core ไม่ใช่ดึงด้วยคอ" },
+      { name: "Hip Thrust",                 sets: "3×10–12",        tip: "สะโพกขึ้นจนลำตัวขนานพื้น บีบสะโพกที่ top ค้าง 1 วิ ทุก rep" },
+      { name: "Leg Extension",              sets: "3×12–15",  ss:1, tip: "บีบต้นขาหน้าที่ top ค้าง 1 วิ ลงช้าๆ" },
+      { name: "Seated Calf Raise",          sets: "3×12–15",  ss:1, tip: "เข่างอ = เน้น Soleus ส่วนที่ Standing เก็บไม่ครบ — น่องได้ความถี่ 2 ครั้ง/สัปดาห์แล้ว" },
+      { name: "Hanging Leg Raise",          sets: "3×12–15",  ss:2, tip: "ยกขาด้วยหน้าท้อง ไม่แกว่งตัว ลงช้าคุมน้ำหนัก" },
+      { name: "Cable Crunch",               sets: "3×15",     ss:2, tip: "ก้มจาก core ไม่ใช่ดึงด้วยคอ" },
       { name: "Reverse Wrist Curl",         sets: "2×15",           tip: "คว่ำมือจับบาร์เบา ม้วนข้อมือขึ้น — Deadlift เผา grip ฝั่งกำไปแล้ว ฝึกฝั่งตรงข้ามให้สมดุล กันปวดข้อศอก" },
     ],
     tipTitle: "💡 เคล็ดลับ Lower B",
-    tipText: "Deadlift คือท่าหนักสุดของสัปดาห์ วอร์มอัพให้พอ พัก 2–3 นาทีได้เลย · Core จับคู่ Superset จบท้าย · เดินชัน 20–25 นาทีพอ"
+    tipText: "Deadlift 3 เซ็ตคุณภาพ ให้ผลเกือบเท่า 4 เซ็ตแต่ recover ดีกว่าชัดเจน · Seated Calf เพิ่มความถี่น่องเป็น 2x/สัปดาห์ · เดินชัน 20–25 นาที Zone 2"
   }
 ];
 
@@ -1030,7 +1051,7 @@ function toggleDone(dayIdx, exIdx, cb) {
 function renderDetail() {
   const d = days[currentDay];
   let html = `<div class="detail-title" style="color:${d.color};">${d.label}</div>`;
-  html += `<div class="rest-note">⏱ พักระหว่างเซ็ต 60–90 วิ &nbsp;·&nbsp; ท่า Compound หนัก (Squat / Deadlift / Bench) พัก 2–3 นาที<br>⚡ SS = Superset: ทำ 2 ท่าสีเดียวกันติดกันไม่พัก จบคู่แล้วค่อยพัก 60–90 วิ</div>`;
+  html += `<div class="rest-note">⏱ พักระหว่างเซ็ต 60–90 วิ &nbsp;·&nbsp; ท่า Compound หนัก (Squat / Deadlift / Bench) พัก 2–3 นาที<br>⚡ SS = Superset: ทำ 2 ท่าสีเดียวกันติดกันไม่พัก จบคู่แล้วค่อยพัก 60–90 วิ<br>🎯 RIR = จำนวน rep ที่ยังเหลือก่อนหมดแรง — น้ำหนักใหม่เริ่ม RIR 3 แล้วไล่เข้า RIR 1 · Isolation ถึง failure ได้ · Squat/Deadlift ห้ามถึง failure</div>`;
   d.exercises.forEach((ex, i) => {
     const done = doneState[`${currentDay}-${i}`] || false;
     html += `
