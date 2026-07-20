@@ -172,6 +172,42 @@
     .ss-1 { background: var(--blue-bg);  color: var(--blue);  }
     .ss-2 { background: var(--green-bg); color: var(--green); }
     .ss-3 { background: var(--pur-bg);   color: var(--pur);   }
+
+    /* ── Set logging ── */
+    .log-toggle {
+      margin-top: 7px; border: 1px solid var(--bdr); background: var(--muted);
+      color: var(--text2); border-radius: 6px; padding: 4px 10px;
+      font-size: 11px; font-weight: 600; cursor: pointer; font-family: var(--font);
+      transition: all 0.15s;
+    }
+    .log-toggle.has-log { color: var(--pur); border-color: var(--pur); background: var(--pur-bg); }
+    .ex-log {
+      margin-top: 8px; background: var(--muted);
+      border-radius: var(--r-md); padding: 10px 12px;
+    }
+    .log-prev { font-size: 11px; color: var(--text2); margin-bottom: 8px; line-height: 1.6; }
+    .log-prev b { color: var(--text1); }
+    .log-set { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .log-n { font-size: 11px; font-weight: 700; color: var(--text2); width: 14px; flex-shrink: 0; }
+    .log-in {
+      width: 66px; padding: 6px 8px; border: 1px solid var(--bdr2);
+      border-radius: 6px; background: var(--card); color: var(--text1);
+      font-size: 13px; font-family: var(--font);
+    }
+    .log-in:focus { outline: none; border-color: var(--pur); }
+    .log-in::-webkit-inner-spin-button, .log-in::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .log-in[type=number] { -moz-appearance: textfield; }
+    .log-x { font-size: 11px; color: var(--text2); }
+    .log-actions { display: flex; gap: 10px; margin-top: 6px; }
+    .log-btn {
+      border: none; background: none; color: var(--pur);
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      padding: 2px 4px; font-family: var(--font);
+    }
+    .log-hist {
+      margin-top: 8px; border-top: 1px dashed var(--bdr2);
+      padding-top: 8px; font-size: 11px; color: var(--text2); line-height: 1.9;
+    }
     .rest-note { font-size: 11px; color: var(--text2); padding: 0 0 10px; border-bottom: 1px solid var(--bdr); margin-bottom: 4px; }
 
     /* ── Nutrition ── */
@@ -1033,7 +1069,21 @@ const days = [
 ];
 
 let currentDay = 0;
-const doneState = {};
+
+/* ── Storage helpers ── */
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function readLS(key) { try { return JSON.parse(localStorage.getItem(key)) || {}; } catch { return {}; } }
+function thDate(k) {
+  const [y, m, dd] = k.split('-');
+  const mo = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${parseInt(dd)} ${mo[parseInt(m)-1]}`;
+}
+
+/* ── Done state (persisted per date) ── */
+const doneState = readLS('doneLog')[todayKey()] || {};
 
 function selectDay(i) {
   currentDay = i;
@@ -1045,7 +1095,106 @@ function selectDay(i) {
 
 function toggleDone(dayIdx, exIdx, cb) {
   doneState[`${dayIdx}-${exIdx}`] = cb.checked;
+  const all = readLS('doneLog');
+  all[todayKey()] = doneState;
+  localStorage.setItem('doneLog', JSON.stringify(all));
   document.getElementById(`exrow-${dayIdx}-${exIdx}`).classList.toggle('done', cb.checked);
+}
+
+/* ── Set logging (keyed by exercise name → date → sets) ── */
+const openLogs = new Set();
+const openHists = new Set();
+
+function targetSets(ex) { const n = parseInt(ex.sets); return isNaN(n) ? 3 : n; }
+function fmtSet(s) { return `${s.w ?? '–'}×${s.r ?? '–'}`; }
+function realSets(arr) { return (arr || []).filter(s => s && (s.w != null || s.r != null)); }
+
+function saveSet(d, i, s, field, val) {
+  const ex = days[d].exercises[i];
+  const all = readLS('exLog');
+  const today = todayKey();
+  if (!all[ex.name]) all[ex.name] = {};
+  if (!all[ex.name][today]) all[ex.name][today] = [];
+  const arr = all[ex.name][today];
+  while (arr.length <= s) arr.push({});
+  const num = val === '' ? null : parseFloat(val);
+  arr[s][field] = (num == null || isNaN(num)) ? null : num;
+  localStorage.setItem('exLog', JSON.stringify(all));
+  const btn = document.getElementById(`logbtn-${d}-${i}`);
+  if (btn) {
+    const n = realSets(arr).length;
+    btn.textContent = n ? `📝 วันนี้ ${n} เซ็ต` : '📝 บันทึกเซ็ต';
+    btn.classList.toggle('has-log', n > 0);
+  }
+}
+
+function addSetRow(d, i) {
+  const ex = days[d].exercises[i];
+  const all = readLS('exLog');
+  const today = todayKey();
+  if (!all[ex.name]) all[ex.name] = {};
+  if (!all[ex.name][today]) all[ex.name][today] = [];
+  const cur = Math.max(targetSets(ex), all[ex.name][today].length);
+  while (all[ex.name][today].length <= cur) all[ex.name][today].push({});
+  localStorage.setItem('exLog', JSON.stringify(all));
+  renderDetail();
+}
+
+function toggleLog(d, i) {
+  const key = `${d}-${i}`;
+  openLogs.has(key) ? openLogs.delete(key) : openLogs.add(key);
+  renderDetail();
+}
+
+function toggleHist(d, i) {
+  const key = `${d}-${i}`;
+  openHists.has(key) ? openHists.delete(key) : openHists.add(key);
+  renderDetail();
+}
+
+function renderLogArea(d, i, ex) {
+  const key = `${d}-${i}`;
+  const hist = readLS('exLog')[ex.name] || {};
+  const today = todayKey();
+  const todaySets = hist[today] || [];
+  const logged = realSets(todaySets).length;
+  let html = `<button class="log-toggle${logged ? ' has-log' : ''}" id="logbtn-${d}-${i}" onclick="toggleLog(${d},${i})">${logged ? `📝 วันนี้ ${logged} เซ็ต` : '📝 บันทึกเซ็ต'}</button>`;
+  if (!openLogs.has(key)) return html;
+
+  const prevDates = Object.keys(hist).filter(k => k < today && realSets(hist[k]).length).sort().reverse();
+  const prevLine = prevDates.length
+    ? `ครั้งก่อน (${thDate(prevDates[0])}): <b>${realSets(hist[prevDates[0]]).map(fmtSet).join(' · ')}</b> — ทำให้ดีกว่านี้!`
+    : 'ยังไม่มีบันทึกครั้งก่อน — วันนี้คือจุดเริ่มต้น';
+
+  let rows = '';
+  const n = Math.max(targetSets(ex), todaySets.length);
+  for (let s = 0; s < n; s++) {
+    const v = todaySets[s] || {};
+    rows += `<div class="log-set">
+      <span class="log-n">${s+1}</span>
+      <input class="log-in" type="number" step="any" inputmode="decimal" placeholder="kg" value="${v.w ?? ''}" oninput="saveSet(${d},${i},${s},'w',this.value)">
+      <span class="log-x">×</span>
+      <input class="log-in" type="number" step="any" inputmode="numeric" placeholder="reps" value="${v.r ?? ''}" oninput="saveSet(${d},${i},${s},'r',this.value)">
+    </div>`;
+  }
+
+  let histHtml = '';
+  if (openHists.has(key)) {
+    const lines = Object.keys(hist).sort().reverse().slice(0, 8)
+      .map(dk => `${thDate(dk)} — ${realSets(hist[dk]).map(fmtSet).join(' · ') || '–'}`);
+    histHtml = `<div class="log-hist">${lines.length ? lines.join('<br>') : 'ยังไม่มีประวัติ'}</div>`;
+  }
+
+  html += `<div class="ex-log">
+    <div class="log-prev">${prevLine}</div>
+    ${rows}
+    <div class="log-actions">
+      <button class="log-btn" onclick="addSetRow(${d},${i})">+ เพิ่มเซ็ต</button>
+      <button class="log-btn" onclick="toggleHist(${d},${i})">${openHists.has(key) ? 'ซ่อนประวัติ' : '📈 ดูประวัติ'}</button>
+    </div>
+    ${histHtml}
+  </div>`;
+  return html;
 }
 
 function renderDetail() {
@@ -1060,6 +1209,7 @@ function renderDetail() {
         <div>
           <div class="ex-name">${ex.name}${ex.ss ? `<span class="ss-tag ss-${ex.ss}">⚡SS${ex.ss}</span>` : ''}</div>
           <div class="ex-tip">${ex.tip}</div>
+          ${renderLogArea(currentDay, i, ex)}
         </div>
         <div class="ex-sets">${ex.sets}</div>
       </div>`;
