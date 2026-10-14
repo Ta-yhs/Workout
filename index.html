@@ -436,3 +436,169 @@ const days = [
     exercises: [
       { name: "Incline Dumbbell Press",     sets: "4×8–10",         tip: "เอียง 30° เน้นอกส่วนบน ลดช้า ดันขึ้นบีบอก · RIR 1–2" },
       { name: "Barbell Row",                sets: "4×8–10",         tip: "หลังตรงเอียง 45° ดึงบาร์มาที่สะดือ squeeze สะบัก · RIR 2 — ถ้ารู้สึกหลังล่างล้า ใช้ Chest-Supported Row แทน" },
+      { name: "Dumbbell Shoulder Press",    sets: "3×10",     ss:1, tip: "หลังพิงพนัก ลดจนศอก 90° ดันขึ้นโดย DB ไม่ชนกัน" },
+      { name: "Face Pull",                  sets: "3×15",     ss:1, tip: "ดึงเชือกมาที่ใบหน้า ศอกสูง — ท่าสำคัญของไหล่หลังและบุคลิกภาพ" },
+      { name: "Cable / DB Lateral Raise",   sets: "3×12–15",  ss:2, tip: "เพิ่มมาเพื่อไหล่กว้าง V-taper — cable ให้แรงต้านสม่ำเสมอตลอดช่วง ยกช้าคุมฟอร์ม" },
+      { name: "Barbell Curl",               sets: "3×12",     ss:2, tip: "ศอกล็อคข้างตัว ไม่แกว่งลำตัว บีบไบเซปที่ top" },
+      { name: "Dips / Close-grip Push-up",  sets: "3×10–12",  ss:3, tip: "ศอกชิดลำตัว ลงช้า เน้นแขนหลัง — ทำได้เกิน 12 rep เมื่อไหร่ ให้ถ่วงน้ำหนัก" },
+      { name: "Farmer's Carry / Wrist Curl", sets: "3×30–40 ม.", ss:3, tip: "เดินถือ DB หนักเพื่อฝึก Grip + Traps หรือวางแขนม้วนข้อมือ 2×15–20 ปิดท้ายคาบ" },
+    ],
+    tipTitle: "💡 เคล็ดลับ Upper B",
+    tipText: "Side Delt ได้ครบ 6 เซ็ต/สัปดาห์เพื่อไหล่กว้าง · ฝึก Grip ไว้ท้ายสุดเสมอ ไม่งั้นแรงกำมือล้ากระทบท่าดึงอื่น · จบแล้วเดินชัน 30–45 นาที Zone 2"
+  }
+];
+
+let currentDay = 0;
+
+/* ── Storage helpers ── */
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function readLS(key) { try { return JSON.parse(localStorage.getItem(key)) || {}; } catch { return {}; } }
+function thDate(k) {
+  const [y, m, dd] = k.split('-');
+  const mo = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${parseInt(dd)} ${mo[parseInt(m)-1]}`;
+}
+
+/* ── Done state (persisted per date) ── */
+const doneState = readLS('doneLog')[todayKey()] || {};
+
+function selectDay(i) {
+  currentDay = i;
+  document.querySelectorAll('.day-card').forEach((c, j) => {
+    c.classList.toggle('active', j === i);
+  });
+  renderDetail();
+}
+
+function toggleDone(dayIdx, exIdx, cb) {
+  doneState[`${dayIdx}-${exIdx}`] = cb.checked;
+  const all = readLS('doneLog');
+  all[todayKey()] = doneState;
+  localStorage.setItem('doneLog', JSON.stringify(all));
+  document.getElementById(`exrow-${dayIdx}-${exIdx}`).classList.toggle('done', cb.checked);
+}
+
+/* ── Set logging (keyed by exercise name → date → sets) ── */
+const openLogs = new Set();
+const openHists = new Set();
+
+function targetSets(ex) { const n = parseInt(ex.sets); return isNaN(n) ? 3 : n; }
+function fmtSet(s) { return `${s.w ?? '–'}×${s.r ?? '–'}`; }
+function realSets(arr) { return (arr || []).filter(s => s && (s.w != null || s.r != null)); }
+
+function saveSet(d, i, s, field, val) {
+  const ex = days[d].exercises[i];
+  const all = readLS('exLog');
+  const today = todayKey();
+  if (!all[ex.name]) all[ex.name] = {};
+  if (!all[ex.name][today]) all[ex.name][today] = [];
+  const arr = all[ex.name][today];
+  while (arr.length <= s) arr.push({});
+  const num = val === '' ? null : parseFloat(val);
+  arr[s][field] = (num == null || isNaN(num)) ? null : num;
+  localStorage.setItem('exLog', JSON.stringify(all));
+  const btn = document.getElementById(`logbtn-${d}-${i}`);
+  if (btn) {
+    const n = realSets(arr).length;
+    btn.textContent = n ? `📝 วันนี้ ${n} เซ็ต` : '📝 บันทึกเซ็ต';
+    btn.classList.toggle('has-log', n > 0);
+  }
+}
+
+function addSetRow(d, i) {
+  const ex = days[d].exercises[i];
+  const all = readLS('exLog');
+  const today = todayKey();
+  if (!all[ex.name]) all[ex.name] = {};
+  if (!all[ex.name][today]) all[ex.name][today] = [];
+  const cur = Math.max(targetSets(ex), all[ex.name][today].length);
+  while (all[ex.name][today].length <= cur) all[ex.name][today].push({});
+  localStorage.setItem('exLog', JSON.stringify(all));
+  renderDetail();
+}
+
+function toggleLog(d, i) {
+  const key = `${d}-${i}`;
+  openLogs.has(key) ? openLogs.delete(key) : openLogs.add(key);
+  renderDetail();
+}
+
+function toggleHist(d, i) {
+  const key = `${d}-${i}`;
+  openHists.has(key) ? openHists.delete(key) : openHists.add(key);
+  renderDetail();
+}
+
+function renderLogArea(d, i, ex) {
+  const key = `${d}-${i}`;
+  const hist = readLS('exLog')[ex.name] || {};
+  const today = todayKey();
+  const todaySets = hist[today] || [];
+  const logged = realSets(todaySets).length;
+  let html = `<button class="log-toggle${logged ? ' has-log' : ''}" id="logbtn-${d}-${i}" onclick="toggleLog(${d},${i})">${logged ? `📝 วันนี้ ${logged} เซ็ต` : '📝 บันทึกเซ็ต'}</button>`;
+  if (!openLogs.has(key)) return html;
+
+  const prevDates = Object.keys(hist).filter(k => k < today && realSets(hist[k]).length).sort().reverse();
+  const prevLine = prevDates.length
+    ? `ครั้งก่อน (${thDate(prevDates[0])}): <b>${realSets(hist[prevDates[0]]).map(fmtSet).join(' · ')}</b> — ทำให้ดีกว่านี้!`
+    : 'ยังไม่มีบันทึกครั้งก่อน — วันนี้คือจุดเริ่มต้น';
+
+  let rows = '';
+  const n = Math.max(targetSets(ex), todaySets.length);
+  for (let s = 0; s < n; s++) {
+    const v = todaySets[s] || {};
+    rows += `<div class="log-set">
+      <span class="log-n">${s+1}</span>
+      <input class="log-in" type="number" step="any" inputmode="decimal" placeholder="kg" value="${v.w ?? ''}" oninput="saveSet(${d},${i},${s},'w',this.value)">
+      <span class="log-x">×</span>
+      <input class="log-in" type="number" step="any" inputmode="numeric" placeholder="reps" value="${v.r ?? ''}" oninput="saveSet(${d},${i},${s},'r',this.value)">
+    </div>`;
+  }
+
+  let histHtml = '';
+  if (openHists.has(key)) {
+    const lines = Object.keys(hist).sort().reverse().slice(0, 8)
+      .map(dk => `${thDate(dk)} — ${realSets(hist[dk]).map(fmtSet).join(' · ') || '–'}`);
+    histHtml = `<div class="log-hist">${lines.length ? lines.join('<br>') : 'ยังไม่มีประวัติ'}</div>`;
+  }
+
+  html += `<div class="ex-log">
+    <div class="log-prev">${prevLine}</div>
+    ${rows}
+    <div class="log-actions">
+      <button class="log-btn" onclick="addSetRow(${d},${i})">+ เพิ่มเซ็ต</button>
+      <button class="log-btn" onclick="toggleHist(${d},${i})">${openHists.has(key) ? 'ซ่อนประวัติ' : '📈 ดูประวัติ'}</button>
+    </div>
+    ${histHtml}
+  </div>`;
+  return html;
+}
+
+function renderDetail() {
+  const d = days[currentDay];
+  let html = `<div class="detail-title" style="color:${d.color};">${d.label}</div>`;
+  html += `<div class="rest-note">⏱ พักระหว่างเซ็ต 60–90 วิ &nbsp;·&nbsp; ท่า Compound หนัก (Squat / RDL / Bench) พัก 2–3 นาที<br>⚡ SS = Superset: ทำ 2 ท่าสีเดียวกันติดกันไม่พัก จบคู่แล้วค่อยพัก 60–90 วิ<br>🎯 RIR = จำนวน rep ที่ยังเหลือก่อนหมดแรง — น้ำหนักใหม่เริ่ม RIR 3 แล้วไล่เข้า RIR 1 · Isolation ถึง failure ได้ · Squat/RDL ห้ามถึง failure</div>`;
+  d.exercises.forEach((ex, i) => {
+    const done = doneState[`${currentDay}-${i}`] || false;
+    html += `
+      <div class="ex-row${done ? ' done' : ''}" id="exrow-${currentDay}-${i}">
+        <input type="checkbox" class="ex-check"${done ? ' checked' : ''} onchange="toggleDone(${currentDay},${i},this)">
+        <div>
+          <div class="ex-name">${ex.name}${ex.ss ? `<span class="ss-tag ss-${ex.ss}">⚡SS${ex.ss}</span>` : ''}</div>
+          <div class="ex-tip">${ex.tip}</div>
+          ${renderLogArea(currentDay, i, ex)}
+        </div>
+        <div class="ex-sets">${ex.sets}</div>
+      </div>`;
+  });
+  html += `<div class="tip-box"><div class="tip-label">${d.tipTitle}</div><div class="tip-text">${d.tipText}</div></div>`;
+  document.getElementById('detailBox').innerHTML = html;
+}
+
+renderDetail();
+</script>
+</body>
+</html>
